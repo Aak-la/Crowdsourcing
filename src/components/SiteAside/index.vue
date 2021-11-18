@@ -1,11 +1,12 @@
 <template>
   <div class="site-aside-container">
     <template v-if="data">
-      <Avatar :url="data.avatar" />
+      <Avatar
+        url="https://images.pexels.com/photos/9800099/pexels-photo-9800099.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+      />
       <h1 class="title">{{ data.siteTitle }}</h1>
     </template>
-
-    <Menu />
+    <Menu v-if="data"/>
     <Contact v-if="data" />
     <p v-if="data" class="footer">
       {{ data.icp }}
@@ -36,8 +37,7 @@ export default {
   background: @dark;
   padding: 20px 0;
   box-sizing: border-box;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
 }
 .avatar-container {
   margin: 0 auto;
