@@ -2,7 +2,8 @@
   <div class="site-aside-container">
     <template v-if="data">
       <Avatar
-        url="https://images.pexels.com/photos/9800099/pexels-photo-9800099.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+        :url="me"
+        :size="130"
       />
       <h1 class="title">{{ data.siteTitle }}</h1>
     </template>
@@ -15,6 +16,7 @@
 </template>
 
 <script>
+import me from "@/assets/me.png";
 import Avatar from "@/components/Avatar";
 import Menu from "./Menu";
 import Contact from "./Contact";
@@ -25,6 +27,13 @@ export default {
     Menu,
     Contact,
   },
+  data() {
+    return {
+      me
+    }
+  },
+  
+   
   computed: mapState("setting", ["data"]),
 };
 </script>

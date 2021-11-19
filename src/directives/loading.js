@@ -1,4 +1,4 @@
-import loadingUrl from "@/assets/loading.svg";
+import loadingUrl from "@/assets/default.gif";
 import styles from "./loading.module.less";
 // 得到el中loading效果的img元素
 function getLoadingImage(el) {
@@ -19,7 +19,7 @@ export default function(el, binding) {
   const curImg = getLoadingImage(el);
   if (binding.value) {
     if (!curImg) {
-      const img = createLoadingImg();
+      const img = createLoadingImg(); 
       el.appendChild(img);
     }
   } else {

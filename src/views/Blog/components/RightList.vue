@@ -52,7 +52,7 @@ export default {
     font-size: 14px;
     cursor: pointer;
     .active {
-      color: @warn;
+      color: @words;
       font-weight: bold;
     }
   }

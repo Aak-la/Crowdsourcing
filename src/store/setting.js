@@ -21,7 +21,6 @@ export default {
       ctx.commit("setData", resp);
       ctx.commit("setLoading", false);
       if (resp.favicon) {
-        // <link rel="shortcut icon " type="images/x-icon" href="./favicon.ico">
         let link = document.querySelector("link[ref='shortcut icon']");
         if (link) {
           return;

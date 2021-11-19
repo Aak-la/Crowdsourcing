@@ -18,9 +18,7 @@
     </li>
     <li>
       <a
-        :href="
-          `tencent://message/?Menu=yes&uin=${data.qq}&Service=300&sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a595b1714f9d45`
-        "
+        :href="`tencent://message/?Menu=yes&uin=${data.qq}&Service=300&sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a595b1714f9d45`"
       >
         <div class="icon">
           <Icon type="qq" />
@@ -28,7 +26,7 @@
         <span>{{ data.qq }}</span>
       </a>
       <div class="pop">
-        <img :src="data.qqQrCode" alt="" />
+        <img :src="QRcode" alt="" />
       </div>
     </li>
     <li>
@@ -39,16 +37,22 @@
         <span>{{ data.weixin }}</span>
       </a>
       <div class="pop">
-        <img :src="data.weixinQrCode" alt="" />
+        <img :src="QRcode" alt="" />
       </div>
     </li>
   </ul>
 </template>
 
 <script>
+import QRcode from "@/assets/QRcode.png";
 import Icon from "@/components/Icon";
 import { mapState } from "vuex";
 export default {
+  data() {
+    return {
+      QRcode,
+    };
+  },
   components: {
     Icon,
   },
@@ -81,9 +85,13 @@ export default {
     align-items: center;
     font-size: 14px;
   }
+  a:hover {
+    color: #fff;
+  }
   .icon {
-    font-size: 26px;
-    width: 36px;
+    font-size: 24px;
+    width: 26px;
+    margin: 4px;
     &.weixin {
       font-size: 32px;
       text-indent: -3px;

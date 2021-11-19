@@ -26,8 +26,9 @@ export default {
       this.show = dom.scrollTop >= 500;
     },
     handleClick() {
-      // 回到顶部
+
       this.$bus.$emit("setMainScroll", 0);
+      
     },
   },
 };
@@ -36,7 +37,7 @@ export default {
 <style scoped lang="less">
 @import "~@/styles/var.less";
 .to-top-container {
-  background: @primary;
+  background: @words;
   width: 50px;
   height: 50px;
   border-radius: 50%;

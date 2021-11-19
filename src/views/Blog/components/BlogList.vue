@@ -1,6 +1,6 @@
 <template>
-  <div class="blog-list-container" ref="mainContainer" v-loading="isLoading">
-    <ul>
+  <div class="blog-list-container" ref="mainContainer" v-loading="isLoading" >
+    <ul v-show="isShow">
       <li v-for="item in data.rows" :key="item.id">
         <div class="thumb" v-if="item.thumb">
           <RouterLink
@@ -54,6 +54,7 @@
       :limit="routeInfo.limit"
       :visibleNumber="10"
       @pageChange="handlePageChange"
+      v-show="isShow"
     />
   </div>
 </template>
@@ -68,6 +69,11 @@ export default {
   mixins: [fetchData({}), mainScroll("mainContainer")],
   components: {
     Pager,
+  },
+  data() {
+    return {
+      isShow:true
+    }
   },
   computed: {
     // 获取路由信息
@@ -118,11 +124,13 @@ export default {
   },
   watch: {
     async $route() {
+      this.isShow=false
       this.isLoading = true;
       // 滚动高度为0
       this.$refs.mainContainer.scrollTop = 0;
       this.data = await this.fetchData();
       this.isLoading = false;
+       this.isShow=true
     },
   },
 };

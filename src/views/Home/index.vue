@@ -48,12 +48,6 @@
   position: relative;
   overflow: hidden;
 
-  // 测试
-  // width: 60%;
-  // height: 40%;
-  // overflow: visible;
-  // border: 2px solid #008c8c;
-  // margin: 100px auto;
 
   ul {
     margin: 0;
@@ -72,9 +66,9 @@
 }
 .icon {
   .self-center();
-  font-size: 30px;
+  font-size: 40px;
   @gap: 25px;
-  color: @gray;
+  color: @dark;
   cursor: pointer;
   transform: translateX(-50%);
   &.icon-up {
@@ -117,8 +111,8 @@
 
   right: 20px;
   li {
-    width: 7px;
-    height: 7px;
+    width: 17px;
+    height: 17px;
     border-radius: 50%;
     background: @words;
     cursor: pointer;
