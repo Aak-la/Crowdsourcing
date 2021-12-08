@@ -7,3 +7,4 @@ export default function(fn, duration = 100) {
     }, duration);
   };
 }
+

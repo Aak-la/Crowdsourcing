@@ -15,7 +15,7 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      srcLoaded: false,
+      srcLoaded: false, 
     };
   },
   computed: mapState("about", {
@@ -34,7 +34,6 @@ export default {
   height: 100%;
   overflow: hidden;
   position: relative;
-   
 }
 .about-content {
   width: 100%;
@@ -42,6 +41,5 @@ export default {
   display: block;
   margin: 0 auto;
   box-sizing: border-box;
- 
 }
 </style>
