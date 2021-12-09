@@ -2,12 +2,10 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from "./routes";
 import { titleController } from "@/utils";
-
-Vue.use(VueRouter); // 使用一个vue插件
-
+import"../store/index"
+Vue.use(VueRouter); 
 const router = new VueRouter({
-  // 配置
-  routes, // 路由匹配规则
+  routes,
   mode: "history",
 });
 

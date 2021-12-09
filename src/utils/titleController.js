@@ -1,4 +1,4 @@
-// 网站标题控制
+
 
 var routeTitle = "",
   siteTitle = "";
@@ -16,12 +16,10 @@ function setTitle() {
 }
 
 export default {
-  // 设置路由标题
   setRouteTitle(title) {
     routeTitle = title;
     setTitle();
   },
-  // 设置网站标题
   setSiteTitle(title) {
     siteTitle = title;
     setTitle();

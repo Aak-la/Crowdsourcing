@@ -28,8 +28,8 @@ export default {
   },
   data() {
     return {
-      originLoaded: false, //  原图是否加载完成
-      everythingDone: false, // 是否一切都尘埃落定了
+      originLoaded: false, 
+      everythingDone: false, 
     };
   },
   computed: {

@@ -4,6 +4,7 @@ import banner from "./banner";
 import setting from "./setting";
 import about from "./about";
 import project from "./project";
+import PageHiding from './PageHiding'
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     setting,
     about,
     project,
+    PageHiding
   },
   strict: true,
 });
