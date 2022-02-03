@@ -47,7 +47,7 @@ export default {
         page: 1,
         limit: this.limit,
       };
-      // 跳转到 当前的分类id  当前的页容量  newPage的页码
+
       if (item.id === -1) {
         this.$router.push({
           name: "Blog",

@@ -40,8 +40,8 @@ export default {
       if (!this.innerSize || !this.containerSize) {
         return;
       }
-      const extraWidth = this.innerSize.width - this.containerSize.width; // 多出的宽度
-      const extraHeight = this.innerSize.height - this.containerSize.height; //多出的高度
+      const extraWidth = this.innerSize.width - this.containerSize.width; 
+      const extraHeight = this.innerSize.height - this.containerSize.height; 
       const left = (-extraWidth / this.containerSize.width) * this.mouseX;
       const top = (-extraHeight / this.containerSize.height) * this.mouseY;
       return {
@@ -111,7 +111,6 @@ export default {
 <style lang="less" scoped>
 @import "~@/styles/var.less";
 .carousel-item-container {
-  // background: @dark;
   width: 100%;
   height: 100%;
   color: #fff;

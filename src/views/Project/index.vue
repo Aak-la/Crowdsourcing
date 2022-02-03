@@ -3,7 +3,7 @@
     <div v-for="item in data" :key="item.id" class="project-item">
       <a
         :href="
-          item.url ? item.url : `javascript:alert('该项目无法通过外网访问')`
+          item.url ? item.url : `javascript:alert('无')`
         "
         :target="item.url ? '_blank' : '_self'"
       >
@@ -13,7 +13,7 @@
         <h2>
           <a
             :href="
-              item.url ? item.url : `javascript:alert('该项目无法通过外网访问')`
+              item.url ? item.url : `javascript:alert('无')`
             "
             :target="item.url ? '_blank' : '_self'"
           >

@@ -15,13 +15,15 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      srcLoaded: false, 
+      srcLoaded: false,
     };
   },
-  computed: mapState("about", {
-    src: "data",
-    loading: "loading",
-  }),
+  computed: {
+    ...mapState("about", {
+      src: "data",
+      loading: "loading",
+    }),
+  },
   created() {
     this.$store.dispatch("about/fetchAbout");
   },

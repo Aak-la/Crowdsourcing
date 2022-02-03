@@ -3,6 +3,7 @@
     <Pager
       :total="total"
       :current="current"
+      :limit="10"
       @pageChange="handlePageChange($event)"
     />
   </div>
@@ -23,7 +24,7 @@ export default {
   methods: {
     handlePageChange(newPage) {
       this.current = newPage;
-      console.log("加载当前页数据");
+   
     },
   },
 };

@@ -58,10 +58,9 @@ export default {
       this.error.nickname = this.formData.nickname ? "" : "请填写昵称";
       this.error.content = this.formData.content ? "" : "请填写内容";
       if (this.error.nickname || this.error.content) {
-        // 有错误
         return;
       }
-      this.isSubmiting = true; // 正在提交，防止重复点击
+      this.isSubmiting = true;
       this.$emit("submit", this.formData, (successMsg) => {
         this.$showMessage({
           content: successMsg,
@@ -74,7 +73,7 @@ export default {
             this.formData.content = "";
           },
         });
-      }); // 让父组件来处理事件
+      }); 
     },
   },
 };

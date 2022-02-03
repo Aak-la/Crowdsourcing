@@ -1,11 +1,8 @@
 <template>
-  <!-- 只有总页数大于1时才显示 -->
   <div class="pager-container" v-if="pageNumber > 1">
-    <a @click="handleClick(1)" :class="{ disabled: current === 1 }">
-      |&lt;&lt;
-    </a>
+    <a @click="handleClick(1)" :class="{ disabled: current === 1 }"> 首页 </a>
     <a @click="handleClick(current - 1)" :class="{ disabled: current === 1 }">
-      &lt;&lt;
+      上一页
     </a>
     <a
       @click="handleClick(n)"
@@ -20,13 +17,13 @@
       @click="handleClick(current + 1)"
       :class="{ disabled: current === pageNumber }"
     >
-      &gt;&gt;
+      下一页
     </a>
     <a
       @click="handleClick(pageNumber)"
       :class="{ disabled: current === pageNumber }"
     >
-      &gt;&gt;|
+      尾页
     </a>
   </div>
 </template>
@@ -46,7 +43,7 @@
       cursor: not-allowed;
     }
     &.active {
-      color: @words;
+      color: @pagewords;
       font-weight: bold;
       cursor: text;
     }
@@ -85,6 +82,7 @@ export default {
       if (min < 1) {
         min = 1;
       }
+  
       return min;
     },
     visibleMax() {
@@ -92,10 +90,12 @@ export default {
       if (max > this.pageNumber) {
         max = this.pageNumber;
       }
+     
       return max;
     },
     numbers() {
       let nums = [];
+      /*  console.log(this.visibleMin,this.visibleMax) */
       for (let i = this.visibleMin; i <= this.visibleMax; i++) {
         nums.push(i);
       }

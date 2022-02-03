@@ -9,7 +9,7 @@
       </a>
     </li>
     <li>
-      <a :href="`mailto:${data.mail}`">
+      <a :href="`https://mail.qq.com/cgi-bin/frame_html?sid=0QxzrARr39oLJThZ&r=5745e1e966d9073d7accb7d3d1bce47e`">
         <div class="icon">
           <Icon type="mail" />
         </div>
@@ -18,7 +18,7 @@
     </li>
     <li>
       <a
-        :href="`tencent://message/?Menu=yes&uin=${data.qq}&Service=300&sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a595b1714f9d45`"
+        :href="`https://mail.qq.com/cgi-bin/frame_html?sid=0QxzrARr39oLJThZ&r=5745e1e966d9073d7accb7d3d1bce47e`"
       >
         <div class="icon">
           <Icon type="qq" />

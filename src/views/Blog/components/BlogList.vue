@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-list-container" ref="mainContainer" v-loading="isLoading" >
+  <div class="blog-list-container" ref="mainContainer" v-loading="isLoading">
     <ul v-show="isShow">
       <li v-for="item in data.rows" :key="item.id">
         <div class="thumb" v-if="item.thumb">
@@ -46,7 +46,6 @@
         </div>
       </li>
     </ul>
-    <!-- 分页放到这里 -->
     <Pager
       v-if="data.total"
       :current="routeInfo.page"
@@ -72,8 +71,8 @@ export default {
   },
   data() {
     return {
-      isShow:true
-    }
+      isShow: true,
+    };
   },
   computed: {
     // 获取路由信息
@@ -81,6 +80,7 @@ export default {
       const categoryId = +this.$route.params.categoryId || -1;
       const page = +this.$route.query.page || 1;
       const limit = +this.$route.query.limit || 10;
+
       return {
         categoryId,
         page,
@@ -124,13 +124,13 @@ export default {
   },
   watch: {
     async $route() {
-      this.isShow=false
+      this.isShow = false;
       this.isLoading = true;
       // 滚动高度为0
       this.$refs.mainContainer.scrollTop = 0;
       this.data = await this.fetchData();
       this.isLoading = false;
-       this.isShow=true
+      this.isShow = true;
     },
   },
 };

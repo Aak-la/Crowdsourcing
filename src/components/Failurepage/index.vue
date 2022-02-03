@@ -17,10 +17,13 @@ export default {
     toHome() {
       this.$router.push({
         name: "Home",
-       
       });
     },
   },
+  created() {
+    this.$bus.$emit("setIsShow", false);
+  },
+  
 };
 </script>
 

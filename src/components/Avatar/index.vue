@@ -13,8 +13,8 @@
 export default {
   props: {
     url: {
-      type: String, // url属性必须是一个字符串
-      required: true, // 属性必传
+      type: String, 
+      required: true, 
     },
     size: {
       type: Number,
@@ -25,7 +25,6 @@ export default {
 </script>
 
 <style scoped>
-/* 带有作用域的样式 */
 .avatar-container {
   border-radius: 50%;
   object-fit: cover;
