@@ -73,15 +73,15 @@
   transform: translateX(-50%);
   &.icon-up {
     top: @gap;
-    animation: jump-up 2s infinite;
+    animation: dance-up 2s infinite;
   }
   &.icon-down {
     top: auto;
     bottom: @gap;
-    animation: jump-down 2s infinite;
+    animation: dance-down 2s infinite;
   }
   @jump: 5px;
-  @keyframes jump-up {
+  @keyframes dance-up {
     0% {
       transform: translate(-50%, @jump);
     }
@@ -92,7 +92,7 @@
       transform: translate(-50%, @jump);
     }
   }
-  @keyframes jump-down {
+  @keyframes dance-down {
     0% {
       transform: translate(-50%, -@jump);
     }

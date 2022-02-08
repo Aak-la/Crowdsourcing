@@ -35,13 +35,13 @@ export default {
     };
   },
   computed: {
-    //得到图片坐标
+  
     imagePosition() {
       if (!this.innerSize || !this.containerSize) {
         return;
       }
-      const extraWidth = this.innerSize.width - this.containerSize.width; 
-      const extraHeight = this.innerSize.height - this.containerSize.height; 
+      const extraWidth = this.innerSize.width - this.containerSize.width;
+      const extraHeight = this.innerSize.height - this.containerSize.height;
       const left = (-extraWidth / this.containerSize.width) * this.mouseX;
       const top = (-extraHeight / this.containerSize.height) * this.mouseY;
       return {
@@ -67,20 +67,18 @@ export default {
     window.removeEventListener("resize", this.setSize);
   },
   methods: {
-    // 调用该方法，显示文字
     showWords() {
       this.$refs.title.style.opacity = 1;
       this.$refs.title.style.width = 0;
-      // 强制让浏览器渲染一次
-      this.$refs.title.clientWidth; // reflow
+
+      this.$refs.title.clientWidth;
       this.$refs.title.style.transition = "1s";
       this.$refs.title.style.width = this.titleWidth + "px";
 
-      // 描述也是一样
       this.$refs.desc.style.opacity = 1;
       this.$refs.desc.style.width = 0;
-      // 强制让浏览器渲染一次
-      this.$refs.desc.clientWidth; // reflow
+
+      this.$refs.desc.clientWidth;
       this.$refs.desc.style.transition = "2s 1s";
       this.$refs.desc.style.width = this.descWidth + "px";
     },

@@ -43,19 +43,16 @@ export default {
     },
     handleScroll(dom) {
       if (this.isLoading || !dom) {
-        // 目前正在加载更多
         return;
       }
-      const range = 100; // 顶一个可接受的范围，在这个范围内都算达到了底部
+      const range = 100; 
       const dec = Math.abs(dom.scrollTop + dom.clientHeight - dom.scrollHeight);
       if (dec <= range) {
         this.fetchMore();
       }
     },
-    // 加载下一页
     async fetchMore() {
       if (!this.hasMore) {
-        // 没有更多啦
         return;
       }
       this.isLoading = true;

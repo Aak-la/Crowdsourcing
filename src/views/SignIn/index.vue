@@ -2,8 +2,16 @@
   <div class="index" :style="BgImgSrc">
     <h1>欢迎来到小熊博客</h1>
     <div class="wrap">
-      账号:&nbsp;&nbsp;<input type="text" placeholder="请填写账号" v-model="name"/><br />
-      密码:&nbsp;&nbsp;<input type="password" v-model="passWord" placeholder="请填写密码" />
+      账号:&nbsp;&nbsp;<input 
+        type="text"
+        placeholder="请填写账号"
+        v-model="name"
+      /><br />
+      密码:&nbsp;&nbsp;<input 
+        type="password"
+        v-model="passWord"
+        placeholder="请填写密码"
+      />
       <div class="btn">
         <button @click="Login">登录</button
         ><button @click="Register">注册</button>
@@ -16,23 +24,23 @@
 export default {
   data() {
     return {
+      isLoading: true,
       BgImgSrc: {
         backgroundImage: "url(" + require("../../assets/loginbg.jpg") + ")",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center center",
       },
-      passWord:"",
-      name:""
+      passWord: "",
+      name: "",
     };
   },
+
   methods: {
     Login() {
-     this.$router.replace("/layout");
+      this.$router.replace("/layout");
     },
-    Register() {
-     
-    },
+    Register() {},
   },
 };
 </script>
@@ -48,6 +56,7 @@ export default {
   h1 {
     color: #fff;
     text-align: center;
+    margin-top: 40px
   }
 
   .wrap {
@@ -82,7 +91,6 @@ export default {
       justify-content: space-around;
     }
     button {
-      /* color: #333; */
       width: 100px;
       border-radius: 20px;
       cursor: pointer;
@@ -97,11 +105,36 @@ export default {
   }
   *::-moz-placeholder {
     /* FF 19+ */
-     color: #fff;
+    color: #fff;
   }
   *:-ms-input-placeholder {
     /* IE 10+ */
     color: #fff;
   }
+  input:focus::-webkit-input-placeholder {
+color: transparent;
+/* transparent是全透明黑色(black)的速记法，即一个类似rgba(0,0,0,0)这样的值 */
+}
+
+
+/* Mozilla Firefox 4 to 18 */
+
+input:focus:-moz-placeholder {
+color: transparent;
+}
+
+
+/* Mozilla Firefox 19+ */
+
+input:focus::-moz-placeholder {
+color: transparent;
+}
+
+
+/* Internet Explorer 10+ */
+
+input:focus:-ms-input-placeholder {
+color: transparent;
+}
 }
 </style>

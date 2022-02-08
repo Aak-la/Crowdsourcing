@@ -7,8 +7,7 @@ Mock.mock("/api/setting", "get", {
     siteTitle: "bearDesign",
     github: "https://github.com/Aak-la",
     qq: "486910173",
-    qqQrCode:
-      "",
+    qqQrCode:"",
     weixin: "Eonmatar",
     weixinQrCode:
       "",

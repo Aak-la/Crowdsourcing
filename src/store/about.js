@@ -4,7 +4,7 @@ export default {
   namespaced: true,
   state: {
     loading: false,
-    data: "",
+    data: "",                                  
   },
   mutations: {
     setLoading(state, payload) {
