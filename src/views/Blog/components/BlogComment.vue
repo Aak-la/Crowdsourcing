@@ -33,16 +33,16 @@ export default {
   },
   computed: {
     hasMore() {
+      console.log(this.data.total)
       return this.data.rows.length < this.data.total;
     },
   },
   methods: {
     handleScroll(dom) {
       if (this.isLoading || !dom) {
-        // 目前正在加载更多
         return;
       }
-      const range = 100; // 顶一个可接受的范围，在这个范围内都算达到了底部
+      const range = 100; 
       const dec = Math.abs(dom.scrollTop + dom.clientHeight - dom.scrollHeight);
       if (dec <= range) {
         this.fetchMore();
@@ -61,7 +61,6 @@ export default {
       this.page++;
       const resp = await this.fetchData();
       this.data.total = resp.total;
-      console.log(resp)
       this.data.rows = this.data.rows.concat(resp.rows);
       this.isLoading = false;
     },
@@ -72,7 +71,7 @@ export default {
       });
       this.data.rows.unshift(resp);
       this.data.total++;
-      callback("评论成功"); // 告诉子组件，我这边处理完了，你继续
+      callback("评论成功");
     },
   },
 };

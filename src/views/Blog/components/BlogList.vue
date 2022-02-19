@@ -105,13 +105,11 @@ export default {
       // 跳转到 当前的分类id  当前的页容量  newPage的页码
       if (this.routeInfo.categoryId === -1) {
         // 当前没有分类
-        // /article?page=${newPage}&limit=${this.routeInfo.limit}
         this.$router.push({
           name: "Blog",
           query,
         });
       } else {
-        // /article/cate/${this.routeInfo.categoryId}?page=${newPage}&limit=${this.routeInfo.limit}
         this.$router.push({
           name: "CategoryBlog",
           query,

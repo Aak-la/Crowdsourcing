@@ -14,6 +14,6 @@ Mock.mock("/api/setting", "get", {
     mail: "486910173@qq.com",
     icp: "贵19294",
     githubName: "Aak-la",
-    favicon: "",
+    favicon: "./../assets/me.png",
   },
 });

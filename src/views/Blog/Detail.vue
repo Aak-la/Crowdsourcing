@@ -36,7 +36,6 @@ export default {
       return resp;
     },
   },
-
   updated() {
     const hash = location.hash;
     location.hash = "";
