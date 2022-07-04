@@ -86,4 +86,12 @@ export default [
       title: "登录",
     },
   }, 
+  {
+    name: "Register",
+    path: "/register",
+    component: getPageComponents(() => import("@/views/Register")),
+    meta: {
+      title: "注册",
+    },
+  }, 
 ];

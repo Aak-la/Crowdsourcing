@@ -1,11 +1,11 @@
 <template>
 	<div class="index">
-		<h1>欢迎来到小熊博客</h1>
+		<h1>请填写注册信息</h1>
 		<div class="wrap">
-			账号:&nbsp;&nbsp;<input type="text" placeholder="请填写账号" v-model="name" /><br />
-			密码:&nbsp;&nbsp;<input type="password" v-model="passWord" placeholder="请填写密码" />
+			登录账号:&nbsp;&nbsp;<input type="text" placeholder="请填写账号" v-model="name" /><br />
+			登录密码:&nbsp;&nbsp;<input type="password" v-model="passWord" placeholder="请填写密码" />
 			<div class="btn">
-				<button @click="Login">登录</button><button @click="Register">注册</button>
+				<button @click="Register">立即注册</button> <button @click="logIn">去登录</button>
 			</div>
 		</div>
 	</div>
@@ -13,34 +13,47 @@
 
 <script>
 	import {
-		getUser
-	} from "@/api/logIn"
+		register
+	} from "@/api/register"
 	import showMessage from "@/utils/showMessage.js";
 	export default {
 		data() {
 			return {
 				isLoading: true,
-				passWord: "",
-				name: "",
+				name: "小叶",
+				passWord: "12345",
 			};
 		},
 
 		methods: {
-			async Login() {
-				const resp = await getUser(this.name, this.passWord)
-				if(resp){
-					showMessage({
-						content: resp[0].msg,
-						type: "info",
-						duration: 1500,
-					})
-					this.$router.replace("/layout");
+			async Register() {
+				let isRegister = true
+				if (this.name.length == 0) {
+					confirm("用户名不能为空");
+					return isRegister =false;
+				}
+				if (this.passWord.length == 0) {
+					confirm("密码不能为空");
+					return isRegister =false;
+				}
+				if (isRegister) {
+					const resp = await register(this.name, this.passWord)
+					if (resp) {
+						showMessage({
+							content: resp[0].msg,
+							type: "info",
+							duration: 1500,
+						})
+						this.name = ""
+						this.passWord = ""
+					}
 				}
 			},
-			Register() {
-				this.$router.replace("/register");
-			},
+			logIn(){
+				this.$router.replace("/");
+			}
 		},
+		
 	};
 </script>
 
@@ -57,14 +70,14 @@
 		h1 {
 			color: #fff;
 			text-align: center;
-			margin-top: 40px
+			margin-top: 90px
 		}
 
 		.wrap {
 			.self-center();
 			padding: 50px 30px;
 			box-sizing: border-box;
-			width: 350px;
+			width: 450px;
 			height: 220px;
 			color: #fff;
 			background: rgba(0, 0, 0, 0.3);

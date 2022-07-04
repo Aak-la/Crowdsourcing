@@ -9,8 +9,7 @@ Mock.mock("/api/setting", "get", {
     qq: "486910173",
     qqQrCode:"",
     weixin: "Eonmatar",
-    weixinQrCode:
-      "",
+    weixinQrCode:"",
     mail: "486910173@qq.com",
     icp: "贵19294",
     githubName: "Aak-la",

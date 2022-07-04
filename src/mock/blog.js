@@ -1,6 +1,7 @@
 import Mock from "mockjs";
 import qs from "querystring";
-Mock.mock("/api/blogtype", "get", {
+
+Mock.mock("/api/blog/type", "get", {
   code: 0,
   msg: "",
   "data|10-20": [
@@ -20,7 +21,7 @@ Mock.mock(/^\/api\/blog(\?.+)?$/, "get", function(options) {
     code: 0,
     msg: "",
     data: {
-      total:2000,
+      total: 2000,
       [`rows|${query.limit || 10}`]: [
         {
           id: "@guid",

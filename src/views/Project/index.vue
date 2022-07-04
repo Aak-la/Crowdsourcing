@@ -2,9 +2,7 @@
   <div class="project-container" ref="projectContainer" v-loading="loading">
     <div v-for="item in data" :key="item.id" class="project-item">
       <a
-        :href="
-          item.url ? item.url : `javascript:alert('无')`
-        "
+        :href="item.url ? item.url : `javascript:alert('无')`"
         :target="item.url ? '_blank' : '_self'"
       >
         <img class="thumb" v-lazy="item.thumb" />
@@ -12,9 +10,7 @@
       <div class="info">
         <h2>
           <a
-            :href="
-              item.url ? item.url : `javascript:alert('无')`
-            "
+            :href="item.url ? item.url : `javascript:alert('无')`"
             :target="item.url ? '_blank' : '_self'"
           >
             {{ item.name }}
