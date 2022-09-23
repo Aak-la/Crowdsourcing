@@ -2,8 +2,8 @@
   <div class="blog-comment-container">
     <MessageArea
       title="评论列表"
-      :subTitle="`(${data.total})`"
-      :list="data.rows"
+      :subTitle="listTotal"
+      :list="data"
       :isListLoading="isLoading"
       @submit="handleSubmit"
     />
@@ -15,63 +15,41 @@ import MessageArea from "@/components/MessageArea";
 import fetchData from "@/mixins/fetchData.js";
 import { getComments, postComment } from "@/api/blog.js";
 export default {
-  mixins: [fetchData({ total: 0, rows: [] })],
   components: {
     MessageArea,
   },
   data() {
     return {
-      page: 1,
-      limit: 10,
+      data: [],
+      isLoading: true,
     };
   },
-  created() {
-    this.$bus.$on("mainScroll", this.handleScroll);
-  },
-  destroyed() {
-    this.$bus.$off("mainScroll", this.handleScroll);
+  async created() {
+    let { data } = await getComments(this.$route.params.id);
+    this.data = data.data;
+    this.isLoading = false;
   },
   computed: {
-    hasMore() {
-      console.log(this.data.total)
-      return this.data.rows.length < this.data.total;
+    listTotal() {
+      return this.data.length;
     },
   },
   methods: {
-    handleScroll(dom) {
-      if (this.isLoading || !dom) {
-        return;
-      }
-      const range = 100; 
-      const dec = Math.abs(dom.scrollTop + dom.clientHeight - dom.scrollHeight);
-      if (dec <= range) {
-        this.fetchMore();
-      }
-    },
-    async fetchData() {
-      return await getComments(this.$route.params.id, this.page, this.limit);
-    },
-    // 加载下一页
-    async fetchMore() {
-      if (!this.hasMore) {
-        // 没有更多啦
-        return;
-      }
-      this.isLoading = true;
-      this.page++;
-      const resp = await this.fetchData();
-      this.data.total = resp.total;
-      this.data.rows = this.data.rows.concat(resp.rows);
-      this.isLoading = false;
-    },
     async handleSubmit(formData, callback) {
       const resp = await postComment({
         blogId: this.$route.params.id,
         ...formData,
       });
-      this.data.rows.unshift(resp);
+      console.log(resp);
+      if (resp.data.data.msg == "添加评论成功") {
+        callback("评论成功");
+        this.$forceUpdate();
+      } else {
+        callback("评论失败");
+      }
+      /* this.data.rows.unshift(resp);
       this.data.total++;
-      callback("评论成功");
+      */
     },
   },
 };

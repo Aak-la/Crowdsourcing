@@ -25,6 +25,7 @@ export default [
         component: getPageComponents(() => import("@/views/About")),
         meta: {
           title: "关于我",
+          isAuthenticated: false,
         },
       },
       {
@@ -37,7 +38,7 @@ export default [
       },
       {
         name: "CategoryBlog",
-        path: "/article/cate/:categoryId",
+        path: "/article/:categoryId",
         component: getPageComponents(() => import("@/views/Blog")),
         meta: {
           title: "文章",
@@ -64,7 +65,7 @@ export default [
         path: "/message",
         component: getPageComponents(() => import("@/views/Message")),
         meta: {
-          title: "留言板",
+          title: "上传文件",
         },
       },
     ],
@@ -85,7 +86,7 @@ export default [
     meta: {
       title: "登录",
     },
-  }, 
+  },
   {
     name: "Register",
     path: "/register",
@@ -93,5 +94,5 @@ export default [
     meta: {
       title: "注册",
     },
-  }, 
+  },
 ];

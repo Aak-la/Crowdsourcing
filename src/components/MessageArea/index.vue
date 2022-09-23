@@ -20,7 +20,7 @@ export default {
       default: "",
     },
     subTitle: {
-      type: String,
+      type: Number,
       default: "",
     },
     list: {

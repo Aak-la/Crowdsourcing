@@ -1,14 +1,14 @@
 import request from "./request";
 
-export async function getMessages(page = 1, limit = 10) {
+export async function getMessages(id) {
   return await request.get("/api/message", {
     params: {
-      page,
-      limit,
+      id,
     },
   });
 }
 
-export async function postMessage(msgInfo) {
-  return await request.post("/api/message", msgInfo);
+export async function postComment(msgInfo) {
+  console.log(msgInfo);
+  return await request.post("/api/comment", msgInfo);
 }

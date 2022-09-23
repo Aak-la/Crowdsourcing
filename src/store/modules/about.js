@@ -1,10 +1,10 @@
-import { getProjects } from "@/api/project";
+import { getAbout } from "@/api/about";
 
 export default {
   namespaced: true,
   state: {
     loading: false,
-    data: [],
+    data: "",
   },
   mutations: {
     setLoading(state, payload) {
@@ -15,13 +15,14 @@ export default {
     },
   },
   actions: {
-    async fetchProject(ctx) {
-      if (ctx.state.data.length) {
+    async fetchAbout(ctx) {
+      if (ctx.state.data) {
         return;
       }
       ctx.commit("setLoading", true);
-      const resp = await getProjects();
-      ctx.commit("setData", resp);
+      const resp = await getAbout();
+
+      ctx.commit("setData", resp.data.data);
       ctx.commit("setLoading", false);
     },
   },

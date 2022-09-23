@@ -18,14 +18,8 @@ export default {
     categoryId() {
       return +this.$route.params.categoryId || -1;
     },
-    limit() {
-      return +this.$route.query.limit || 10;
-    },
     list() {
-      const totalArticleCount = this.data.reduce(
-        (a, b) => a + b.articleCount,
-        0
-      );
+      const totalArticleCount = this.data.reduce((a, b) => a + b.total, 0);
 
       const result = [
         { name: "全部", id: -1, articleCount: totalArticleCount },
@@ -34,31 +28,25 @@ export default {
       return result.map((it) => ({
         ...it,
         isSelect: it.id === this.categoryId,
-        aside: `${it.articleCount}篇`,
+        aside: `${it.total}篇`,
       }));
     },
   },
   methods: {
     async fetchData() {
-      return await getBlogCategories();
+      let data = await getBlogCategories();
+      return data.data;
     },
     handleSelect(item) {
-      const query = {
-        page: 1,
-        limit: this.limit,
-      };
-
       if (item.id === -1) {
         this.$router.push({
           name: "Blog",
-          query,
         });
       } else {
         this.$router.push({
           name: "CategoryBlog",
-          query,
           params: {
-            categoryId: item.id,
+            categoryId: item.name,
           },
         });
       }
@@ -69,7 +57,7 @@ export default {
 
 <style scoped lang="less">
 .blog-category-container {
-  width: 300px;
+  width: 150px;
   box-sizing: border-box;
   padding: 20px;
   position: relative;

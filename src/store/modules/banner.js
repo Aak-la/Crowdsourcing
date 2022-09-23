@@ -21,7 +21,7 @@ export default {
       }
       ctx.commit("setLoading", true);
       const resp = await getBanners();
-      ctx.commit("setData", resp);
+      ctx.commit("setData", resp.data.data.data);
       ctx.commit("setLoading", false);
     },
   },

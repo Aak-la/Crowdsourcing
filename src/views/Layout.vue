@@ -1,16 +1,16 @@
 <template>
   <div class="app-container">
-    <Layout >
+    <Layout>
       <template #left>
         <div class="aside">
           <SiteAside />
         </div>
       </template>
-      <template #default >
+      <template #default>
         <RouterView />
       </template>
     </Layout>
-     <div><RouterView /></div>
+    <div><RouterView /></div>
     <ToTop />
   </div>
 </template>
@@ -29,12 +29,8 @@ export default {
     SiteAside,
     ToTop,
   },
- 
- 
-  
 };
 </script>
-
 
 <style lang="less" scoped>
 @import "~@/styles/mixin.less";

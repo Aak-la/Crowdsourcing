@@ -1,19 +1,8 @@
 <template>
   <div class="blog-list-container" ref="mainContainer" v-loading="isLoading">
     <ul v-show="isShow">
-      <li v-for="item in data.rows" :key="item.id">
-        <div class="thumb" v-if="item.thumb">
-          <RouterLink
-            :to="{
-              name: 'BlogDetail',
-              params: {
-                id: item.id,
-              },
-            }"
-          >
-            <img v-lazy="item.thumb" :alt="item.title" :title="item.title" />
-          </RouterLink>
-        </div>
+      <li v-for="item in data" :key="item.id" v-if="data">
+        <div class="thumb" v-if="item"></div>
         <div class="main">
           <RouterLink
             :to="{
@@ -26,35 +15,32 @@
             <h2>{{ item.title }}</h2>
           </RouterLink>
           <div class="aside">
-            <span>日期：{{ formatDate(item.createDate) }}</span>
+            <span>日期：{{ intercept(item.create_time) }}</span>
             <span>浏览：{{ item.scanNumber }}</span>
             <span>评论：{{ item.commentNumber }}</span>
             <RouterLink
               :to="{
                 name: 'CategoryBlog',
                 params: {
-                  categoryId: item.category.id,
+                  categoryId: item.category,
                 },
               }"
             >
-              {{ item.category.name }}
+              {{ item.category }}
             </RouterLink>
-          </div>
-          <div class="desc">
-            {{ item.description }}
           </div>
         </div>
       </li>
     </ul>
-    <Pager
-      v-if="data.total"
+    <!--  <Pager
+      v-if="total"
       :current="routeInfo.page"
-      :total="data.total"
+      :total="total"
       :limit="routeInfo.limit"
       :visibleNumber="10"
       @pageChange="handlePageChange"
       v-show="isShow"
-    />
+    /> -->
   </div>
 </template>
 
@@ -62,20 +48,31 @@
 import Pager from "@/components/Pager";
 import fetchData from "@/mixins/fetchData.js";
 import { getBlogs } from "@/api/blog.js";
-import { formatDate } from "@/utils";
+import intercept from "@/utils/interceptTime";
 import mainScroll from "@/mixins/mainScroll.js";
 export default {
-  mixins: [fetchData({}), mainScroll("mainContainer")],
   components: {
     Pager,
   },
   data() {
     return {
       isShow: true,
+      data: null,
+      isLoading: true,
+      total: null,
     };
   },
+  async created() {
+    let BlogList = await getBlogs(
+      this.routeInfo.page,
+      this.routeInfo.limit,
+      this.routeInfo.categoryId
+    );
+    this.data = BlogList.data.data;
+    this.total = BlogList.data.total;
+    this.isLoading = false;
+  },
   computed: {
-    // 获取路由信息
     routeInfo() {
       const categoryId = +this.$route.params.categoryId || -1;
       const page = +this.$route.query.page || 1;
@@ -89,7 +86,7 @@ export default {
     },
   },
   methods: {
-    formatDate,
+    intercept,
     async fetchData() {
       return await getBlogs(
         this.routeInfo.page,
@@ -102,12 +99,9 @@ export default {
         page: newPage,
         limit: this.routeInfo.limit,
       };
-      // 跳转到 当前的分类id  当前的页容量  newPage的页码
       if (this.routeInfo.categoryId === -1) {
-        // 当前没有分类
         this.$router.push({
           name: "Blog",
-          query,
         });
       } else {
         this.$router.push({
@@ -124,11 +118,22 @@ export default {
     async $route() {
       this.isShow = false;
       this.isLoading = true;
-      // 滚动高度为0
       this.$refs.mainContainer.scrollTop = 0;
-      this.data = await this.fetchData();
-      this.isLoading = false;
-      this.isShow = true;
+      let category = this.$route.params.categoryId;
+      if (category == "全部") {
+        let result = await this.fetchData();
+        let res = result.data.data;
+        this.data = res;
+        this.isLoading = false;
+        this.isShow = true;
+      } else {
+        let result = await this.fetchData();
+        let res = result.data.data;
+        let ru = res.filter((item) => item.category == category);
+        this.data = ru;
+        this.isLoading = false;
+        this.isShow = true;
+      }
     },
   },
 };
@@ -176,10 +181,6 @@ li {
     span {
       margin-right: 15px;
     }
-  }
-  .desc {
-    margin: 15px 0;
-    font-size: 14px;
   }
 }
 </style>

@@ -1,19 +1,18 @@
 <template>
   <ul class="right-list-container">
     <li v-for="(item, i) in list" :key="i">
-      <span @click="handleClick(item)" :class="{ active: item.isSelect }">
+      <span @click="handleClick(item)" :class="{ active: index == item.id }">
         {{ item.name }}
       </span>
       <span
-        v-if="item.aside"
+        v-if="item.total"
         @click="handleClick(item)"
         class="aside"
-        :class="{ active: item.isSelect }"
+        :class="{ active: index == item.id }"
       >
-        {{ item.aside }}
+        {{ item.total }}篇
       </span>
       <!-- 显示当前组件 -->
-      <RightList :list="item.children" @select="handleClick" />
     </li>
   </ul>
 </template>
@@ -21,6 +20,12 @@
 <script>
 export default {
   name: "RightList",
+  data() {
+    return {
+      index: -1,
+    };
+  },
+
   props: {
     list: {
       type: Array,
@@ -29,9 +34,14 @@ export default {
   },
   methods: {
     handleClick(item) {
-      if (!item.isSelect) {
-        this.$emit("select", item);
-      }
+      this.index = item.id;
+      this.$router.push({
+        name: "CategoryBlog",
+        params: {
+          categoryId: item.name,
+        },
+      });
+      this.$forceUpdate();
     },
   },
 };

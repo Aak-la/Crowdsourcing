@@ -5,14 +5,11 @@
         :href="item.url ? item.url : `javascript:alert('无')`"
         :target="item.url ? '_blank' : '_self'"
       >
-        <img class="thumb" v-lazy="item.thumb" />
+        <img class="thumb" v-lazy="item.url" />
       </a>
       <div class="info">
         <h2>
-          <a
-            :href="item.url ? item.url : `javascript:alert('无')`"
-            :target="item.url ? '_blank' : '_self'"
-          >
+          <a :href="item.url">
             {{ item.name }}
           </a>
         </h2>
@@ -22,11 +19,9 @@
           :href="item.github"
           v-if="item.github"
         >
-          github
+          github点击前往
         </a>
-        <p v-for="(desc, i) in item.description" :key="i">
-          {{ desc }}
-        </p>
+        <p>项目描述： {{ item.description }}</p>
       </div>
     </div>
   </div>
@@ -72,6 +67,7 @@ export default {
     object-fit: cover;
     border-radius: 5px;
     margin-right: 15px;
+    pointer-events: none;
   }
   .info {
     line-height: 1.7;
@@ -83,6 +79,7 @@ export default {
   .github {
     font-size: 14px;
     color: @primary;
+    font-weight: bolder;
   }
 }
 </style>

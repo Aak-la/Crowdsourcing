@@ -1,4 +1,3 @@
-
 export default function(defaultDataValue = null) {
   return {
     data() {
@@ -8,7 +7,8 @@ export default function(defaultDataValue = null) {
       };
     },
     async created() {
-      this.data = await this.fetchData();
+      let res = await this.fetchData();
+      this.data = res.data;
       this.isLoading = false;
     },
   };

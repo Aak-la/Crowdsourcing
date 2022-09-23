@@ -17,7 +17,6 @@
 </template>
 
 <script>
-
 import Icon from "@/components/Icon";
 export default {
   components: {
@@ -25,40 +24,38 @@ export default {
   },
   data() {
     return {
-     
       items: [
         {
           name: "Home",
-          title: "首页",
+          title: "博客首页",
           icon: "home",
           exact: true,
         },
         {
           name: "Blog",
-          title: "文章",
+          title: "我的文章",
           icon: "blog",
           exact: false, // 激活状态是否要精确匹配
         },
-        
+
         {
           name: "Project",
-          title: "项目",
+          title: "我的项目",
           icon: "code",
           exact: true,
         },
         {
           name: "About",
-          title: "关于我",
+          title: "我的故事",
           icon: "about",
           exact: true,
         },
         {
           name: "Message",
-          title: "留言板",
+          title: "上传文件",
           icon: "chat",
           exact: true,
         },
-        
       ],
     };
   },

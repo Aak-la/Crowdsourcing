@@ -5,9 +5,9 @@
       <BlogComment v-if="!isLoading" />
     </div>
     <template #right>
-      <div class="right-container" v-loading="isLoading">
+      <!-- <div class="right-container" v-loading="isLoading">
         <BlogTOC :toc="data.toc" v-if="data" />
-      </div>
+      </div> -->
     </template>
   </Layout>
 </template>
@@ -17,7 +17,6 @@ import fetchData from "@/mixins/fetchData";
 import { getBlog } from "@/api/blog";
 import Layout from "@/components/Layout";
 import BlogDetail from "./components/BlogDetail";
-import BlogTOC from "./components/BlogTOC";
 import BlogComment from "./components/BlogComment";
 import mainScroll from "@/mixins/mainScroll.js";
 import { titleController } from "@/utils";
@@ -25,7 +24,6 @@ export default {
   components: {
     Layout,
     BlogDetail,
-    BlogTOC,
     BlogComment,
   },
   mixins: [fetchData(null), mainScroll("mainContainer")],
@@ -33,7 +31,7 @@ export default {
     async fetchData() {
       const resp = await getBlog(this.$route.params.id);
       titleController.setRouteTitle(resp.title);
-      return resp;
+      return resp.data;
     },
   },
   updated() {

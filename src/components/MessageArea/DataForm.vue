@@ -6,18 +6,6 @@
     class="data-form-container"
   >
     <div class="form-item">
-      <div class="input-area">
-        <input
-          type="text"
-          maxlength="10"
-          v-model="formData.nickname"
-          placeholder="用户昵称"
-        />
-        <span class="tip">{{ formData.nickname.length }}/10</span>
-      </div>
-      <div class="error">{{ error.nickname }}</div>
-    </div>
-    <div class="form-item">
       <div class="text-area">
         <textarea
           maxlength="300"
@@ -55,7 +43,6 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.error.nickname = this.formData.nickname ? "" : "请填写昵称";
       this.error.content = this.formData.content ? "" : "请填写内容";
       if (this.error.nickname || this.error.content) {
         return;
@@ -73,7 +60,7 @@ export default {
             this.formData.content = "";
           },
         });
-      }); 
+      });
     },
   },
 };
