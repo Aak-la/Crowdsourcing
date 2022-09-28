@@ -57,7 +57,7 @@ export default [
         path: "/project",
         component: getPageComponents(() => import("@/views/Project")),
         meta: {
-          title: "项目&效果",
+          title: "项目简介",
         },
       },
       {
@@ -66,6 +66,22 @@ export default [
         component: getPageComponents(() => import("@/views/Message")),
         meta: {
           title: "上传文件",
+        },
+      },
+      {
+        name: "ArticleOverview",
+        path: "/overview",
+        component: getPageComponents(() => import("@/views/ArticleOverview")),
+        meta: {
+          title: "文章总览",
+        },
+      },
+      {
+        name: "EditText",
+        path: "/EditText",
+        component: getPageComponents(() => import("@/views/EditText")),
+        meta: {
+          title: "富文本编辑",
         },
       },
     ],

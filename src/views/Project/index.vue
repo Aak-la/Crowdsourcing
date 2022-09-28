@@ -1,12 +1,7 @@
 <template>
   <div class="project-container" ref="projectContainer" v-loading="loading">
     <div v-for="item in data" :key="item.id" class="project-item">
-      <a
-        :href="item.url ? item.url : `javascript:alert('无')`"
-        :target="item.url ? '_blank' : '_self'"
-      >
-        <img class="thumb" v-lazy="item.url" />
-      </a>
+      <img class="thumb" v-lazy="item.url" />
       <div class="info">
         <h2>
           <a :href="item.url">
@@ -19,9 +14,11 @@
           :href="item.github"
           v-if="item.github"
         >
-          github点击前往
+          github地址: {{ item.github }}
         </a>
-        <p>项目描述： {{ item.description }}</p>
+        <p><h3>项目描述:</h3> {{ item.description}}
+        <h3>创建时间:</h3> {{ item.create_time}}
+        <h3>项目目的:</h3> {{ item.objective}}</p>
       </div>
     </div>
   </div>
@@ -55,6 +52,8 @@ export default {
   padding: 20px;
   display: flex;
   margin-bottom: 20px;
+  border-radius: 20px;
+  min-width: 660px;
   &:hover {
     box-shadow: -1px 1px 5px #000;
     transform: scale(1.01) translate(3px, -3px);
@@ -68,6 +67,7 @@ export default {
     border-radius: 5px;
     margin-right: 15px;
     pointer-events: none;
+    
   }
   .info {
     line-height: 1.7;

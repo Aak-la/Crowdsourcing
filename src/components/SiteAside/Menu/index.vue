@@ -27,7 +27,7 @@ export default {
       items: [
         {
           name: "Home",
-          title: "博客首页",
+          title: "平台首页",
           icon: "home",
           exact: true,
         },
@@ -53,6 +53,18 @@ export default {
         {
           name: "Message",
           title: "上传文件",
+          icon: "chat",
+          exact: true,
+        },
+        {
+          name: "ArticleOverview",
+          title: "文章总览",
+          icon: "chat",
+          exact: true,
+        },
+        {
+          name: "EditText",
+          title: "富文本编辑",
           icon: "chat",
           exact: true,
         },

@@ -1,26 +1,23 @@
 <template>
   <div class="site-aside-container">
-    <template v-if="data">
-      <Avatar
-        :url="me"
-        :size="130"
-      />
-      <h1 class="title">{{ data.siteTitle }}</h1>
+    <template>
+      <Avatar :url="avatar ? avatar : defaultImg" :size="130" />
+      <h1 class="title" v-if="!name" @click="login" style="cursor: pointer;">
+        去登录
+      </h1>
+      <h1 class="title" v-else>{{ name }}</h1>
     </template>
-    <Menu v-if="data"/>
-    <Contact v-if="data" />
-    <p v-if="data" class="footer">
-      {{ data.icp }}
-    </p>
+    <Menu />
+    <Contact />
   </div>
 </template>
 
 <script>
-import me from "@/assets/me.png";
 import Avatar from "@/components/Avatar";
+import defaultImg from "../../assets/login.png";
 import Menu from "./Menu";
 import Contact from "./Contact";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
   components: {
     Avatar,
@@ -29,12 +26,17 @@ export default {
   },
   data() {
     return {
-      me
-    }
+      defaultImg,
+    };
   },
-  
-   
-  computed: mapState("setting", ["data"]),
+  computed: {
+    ...mapGetters(["avatar", "name"]),
+  },
+  methods: {
+    login() {
+       this.$router.replace("/");
+    },
+  },
 };
 </script>
 
@@ -50,10 +52,6 @@ export default {
 }
 .avatar-container {
   margin: 0 auto;
-}
-.footer {
-  text-align: center;
-  font-size: 12px;
 }
 .title {
   font-size: 1.2em;

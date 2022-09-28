@@ -48,7 +48,6 @@
   position: relative;
   overflow: hidden;
 
-
   ul {
     margin: 0;
     list-style: none;
