@@ -21,8 +21,6 @@
 </template>
 
 <script>
-import "highlight.js/styles/github.css";
-import "@/styles/markdown.css";
 import intercept from "@/utils/interceptTime";
 export default {
   props: {

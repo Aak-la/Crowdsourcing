@@ -10,6 +10,5 @@ export async function getUser(data) {
 }
 
 export async function logout(token) {
-  console.log(token);
   return await request.post("/api/logout", { token });
 }

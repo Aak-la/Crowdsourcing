@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { Message } from "element-ui";
 export default {
   data() {
     return {
@@ -49,17 +50,14 @@ export default {
       }
       this.isSubmiting = true;
       this.$emit("submit", this.formData, (successMsg) => {
-        this.$showMessage({
-          content: successMsg,
-          type: "success",
+        this.$message({
+          message: successMsg,
+          type: successMsg == "评论成功" ? "success" : "warning",
           duration: 1000,
-          container: this.$refs.form,
-          callback: () => {
-            this.isSubmiting = false;
-            this.formData.nickname = "";
-            this.formData.content = "";
-          },
         });
+        this.isSubmiting = false;
+        this.formData.nickname = "";
+        this.formData.content = "";
       });
     },
   },

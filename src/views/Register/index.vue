@@ -118,7 +118,7 @@ export default {
         callback();
       }
     };
-    const validateemail = (rule, value, callback) => {
+    const validateEmail = (rule, value, callback) => {
       if (value.length < 11) {
         callback(new Error("手机号不能少于11位"));
       } else {
@@ -140,14 +140,13 @@ export default {
           { required: true, trigger: "blur", validator: validatePassword },
         ],
         phone: [{ required: true, trigger: "blur", validator: validatePhone }],
-        email: [{ required: true, trigger: "blur", validator: validateemail }],
+        email: [{ required: true, trigger: "blur", validator: validateEmail }],
       },
       passwordType: "password",
       capsTooltip: false,
       loading: false,
       showDialog: false,
       redirect: undefined,
-      otherQuery: {},
       timer: null,
     };
   },
@@ -168,22 +167,25 @@ export default {
         if (valid) {
           this.loading = true;
           const res = await register(this.loginForm);
-          console.log(res);
+          this.$message({
+            message: res.data.msg,
+            type: res.data.status,
+          });
+          this.loading = false;
+          if (res.data.msg == "注册成功") {
+            this.timer = setTimeout(() => {
+              this.$router.replace("/");
+            }, 1500);
+          }
         } else {
           console.log("error submit!!");
           return false;
         }
       });
     },
-    handlelogout() {
-      this.$router.replace("/layout");
-    },
-    handleRegister() {
-      this.$router.replace("/register");
-    },
-    destroyed() {
-      clearTimeout(this.timer);
-    },
+  },
+  destroyed() {
+    /*  clearTimeout(this.timer); */
   },
 };
 </script>

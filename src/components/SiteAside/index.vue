@@ -16,7 +16,7 @@
 import Avatar from "@/components/Avatar";
 import defaultImg from "../../assets/login.png";
 import Menu from "./Menu";
-import Contact from "./Contact";
+import Contact from "./Menu/Contact";
 import { mapState, mapGetters } from "vuex";
 export default {
   components: {
@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     login() {
-       this.$router.replace("/");
+      this.$router.replace("/");
     },
   },
 };

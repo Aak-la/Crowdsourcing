@@ -2,7 +2,6 @@
   <div class="blog-list-container" ref="mainContainer" v-loading="isLoading">
     <ul v-show="isShow">
       <li v-for="item in data" :key="item.id" v-if="data">
-        <div class="thumb" v-if="item"></div>
         <div class="main">
           <RouterLink
             :to="{
@@ -13,11 +12,30 @@
             }"
           >
             <h2>{{ item.title }}</h2>
+            <p></p>
+            <p class="describe">{{ item.description }}</p>
           </RouterLink>
           <div class="aside">
             <span>日期：{{ intercept(item.create_time) }}</span>
-            <span>浏览：{{ item.scanNumber }}</span>
-            <span>评论：{{ item.commentNumber }}</span>
+            <span class="spacing"></span>
+            <el-badge
+              :value="200"
+              :max="item.commentNumber"
+              class="item"
+              type="primary"
+            >
+              <el-button size="small">评论</el-button>
+            </el-badge>
+            <span class="spacing"></span>
+            <el-badge
+              :value="200"
+              :max="item.scanNumber"
+              class="item"
+              type="primary"
+            >
+              <el-button size="small">浏览</el-button>
+            </el-badge>
+            <span class="spacing"></span>
             <RouterLink
               :to="{
                 name: 'CategoryBlog',
@@ -30,17 +48,11 @@
             </RouterLink>
           </div>
         </div>
+        <div class="thumb" v-if="item.img">
+          <img :src="item.img" alt="" />
+        </div>
       </li>
     </ul>
-    <!--  <Pager
-      v-if="total"
-      :current="routeInfo.page"
-      :total="total"
-      :limit="routeInfo.limit"
-      :visibleNumber="10"
-      @pageChange="handlePageChange"
-      v-show="isShow"
-    /> -->
   </div>
 </template>
 
@@ -150,6 +162,7 @@ export default {
   height: 100%;
   box-sizing: border-box;
   scroll-behavior: smooth;
+  min-width: 840px;
   ul {
     list-style: none;
     margin: 0;
@@ -161,25 +174,47 @@ li {
   padding: 15px 0;
   border-bottom: 1px solid @gray;
   .thumb {
-    flex: 0 0 auto;
-    margin-right: 15px;
-    img {
+    width: 150px;
+    overflow: hidden;
+    height: 150px;
+    margin-right: 9px;
+    > img {
       display: block;
-      max-width: 200px;
-      border-radius: 5px;
+      width: 100%;
+      z-index: 999;
     }
   }
   .main {
     flex: 1 1 auto;
+    overflow: hidden;
+    height: 150px;
     h2 {
       margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    position: relative;
+    .describe {
+      width: 600px;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #999;
     }
   }
   .aside {
+    position: absolute;
     font-size: 12px;
     color: @gray;
     span {
       margin-right: 15px;
+    }
+    bottom: 0;
+    .spacing {
+      display: inline-block;
+      width: 20px;
     }
   }
 }

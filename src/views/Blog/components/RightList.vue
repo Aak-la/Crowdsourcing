@@ -12,7 +12,6 @@
       >
         {{ item.total }}篇
       </span>
-      <!-- 显示当前组件 -->
     </li>
   </ul>
 </template>

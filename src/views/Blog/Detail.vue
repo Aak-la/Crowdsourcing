@@ -4,11 +4,7 @@
       <BlogDetail :blog="data" v-if="data" />
       <BlogComment v-if="!isLoading" />
     </div>
-    <template #right>
-      <!-- <div class="right-container" v-loading="isLoading">
-        <BlogTOC :toc="data.toc" v-if="data" />
-      </div> -->
-    </template>
+    <template #right> </template>
   </Layout>
 </template>
 

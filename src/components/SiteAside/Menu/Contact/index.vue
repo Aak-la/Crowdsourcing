@@ -14,7 +14,7 @@ export default {
         cancelButtonText: "取消",
       })
         .then(() => {
-          this.$store.dispatch("user/handleLogOut").then((res) => {});
+          this.$store.dispatch("user/handleLogOut");
           this.$router.replace("/");
         })
         .catch(() => {});

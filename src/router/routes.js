@@ -27,7 +27,27 @@ export default [
           title: "关于我",
           isAuthenticated: false,
         },
+        children: [
+          {
+            name: "information",
+            path: "/about/information",
+            component: getPageComponents(() =>
+              import("@/views/About/information")
+            ),
+            meta: {
+              title: "修改信息",
+            },
+          },
+        ],
       },
+      /* {
+        name: "information",
+        path: "/information",
+        component: getPageComponents(() => import("@/views/About/information")),
+        meta: {
+          title: "修改信息",
+        },
+      }, */
       {
         name: "Blog",
         path: "/article",

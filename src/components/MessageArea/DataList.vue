@@ -3,8 +3,8 @@
     <li v-for="item in list" :key="item.id">
       <Avatar :url="item.avatar" :size="44" />
       <div class="data">
-        <div class="nickname">{{ item.commentUser }}</div>
-        <div class="content">{{ item.comment }}</div>
+        <div class="nickname">{{ item.nickname }}</div>
+        <div class="content">{{ item.content }}</div>
         <div class="time">{{ interceptTime(item.create_time) }}</div>
       </div>
     </li>

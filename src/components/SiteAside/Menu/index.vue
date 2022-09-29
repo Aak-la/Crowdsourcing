@@ -46,7 +46,7 @@ export default {
         },
         {
           name: "About",
-          title: "我的故事",
+          title: "个人中心",
           icon: "about",
           exact: true,
         },
