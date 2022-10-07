@@ -4,15 +4,17 @@
     <RightList :list="list" @select="handleSelect" />
   </div>
 </template>
-
 <script>
 import RightList from "./RightList";
-import fetchData from "@/mixins/fetchData.js";
-import { getBlogCategories } from "@/api/blog.js";
 export default {
-  mixins: [fetchData([])],
   components: {
     RightList,
+  },
+  data() {
+    return {
+      data: [],
+      isLoading: true,
+    };
   },
   computed: {
     categoryId() {
@@ -22,7 +24,7 @@ export default {
       const totalArticleCount = this.data.reduce((a, b) => a + b.total, 0);
 
       const result = [
-        { name: "全部", id: -1, articleCount: totalArticleCount },
+        { name: "全部", id: -1, total: totalArticleCount },
         ...this.data,
       ];
       return result.map((it) => ({
@@ -33,10 +35,6 @@ export default {
     },
   },
   methods: {
-    async fetchData() {
-      let data = await getBlogCategories();
-      return data.data;
-    },
     handleSelect(item) {
       if (item.id === -1) {
         this.$router.push({
@@ -51,6 +49,13 @@ export default {
         });
       }
     },
+  },
+  created() {
+    this.$store.dispatch("classification/getClassification").then((res) => {
+      this.data = res.data.data;
+      this.isLoading = false;
+      console.log(this.data);
+    });
   },
 };
 </script>

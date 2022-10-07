@@ -65,5 +65,6 @@ export default {
 <style scoped lang="less">
 .blog-comment-container {
   margin: 30px 0;
+  max-width: 1000px;
 }
 </style>

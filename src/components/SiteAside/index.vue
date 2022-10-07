@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     login() {
-      this.$router.replace("/");
+      this.$router.replace("/SignIn");
     },
   },
 };

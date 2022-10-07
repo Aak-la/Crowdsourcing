@@ -20,17 +20,6 @@ export default {
       const resp = await getSetting();
       ctx.commit("setData", resp);
       ctx.commit("setLoading", false);
-      if (resp.favicon) {
-        let link = document.querySelector("link[ref='shortcut icon']");
-        if (link) {
-          return;
-        }
-        link = document.createElement("link");
-        link.rel = "shortcut icon";
-        link.type = "images/x-icon";
-        link.href = resp.favicon;
-        document.querySelector("head").appendChild(link);
-      }
       if (resp.siteTitle) {
         titleController.setSiteTitle(resp.siteTitle);
       }

@@ -1,9 +1,24 @@
 <template>
-  <div>EditText</div>
+  <Layout>
+    <template #left>
+      <div class="aside">
+        <SiteAside />
+      </div>
+    </template>
+    <template>
+      <div>富文本编辑</div>
+    </template>
+  </Layout>
 </template>
 
 <script>
-export default {};
-</script>
+import SiteAside from "@/components/SiteAside";
+import Layout from "@/components/Layout";
 
-<style></style>
+export default {
+  components: {
+    SiteAside,
+    Layout,
+  },
+};
+</script>

@@ -45,8 +45,8 @@ export default {
           exact: true,
         },
         {
-          name: "About",
-          title: "个人中心",
+          name: "EXCEL",
+          title: "EXC表格",
           icon: "about",
           exact: true,
         },
@@ -65,6 +65,12 @@ export default {
         {
           name: "EditText",
           title: "富文本编辑",
+          icon: "chat",
+          exact: true,
+        },
+        {
+          name: "backgroundManagement",
+          title: "后台管理",
           icon: "chat",
           exact: true,
         },

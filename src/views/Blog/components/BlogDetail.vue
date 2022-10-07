@@ -1,7 +1,7 @@
 <template>
   <div class="blog-detail-container">
     <h1>{{ blog.title }}</h1>
-    <div class="aside">
+    <div class="Aside">
       <span>日期: {{ intercept(blog.create_time) }}</span>
       <span>浏览: {{ blog.scanNumber }}</span>
       <a href="#data-form-container">评论: {{ blog.commentNumber }}</a>
@@ -37,21 +37,25 @@ export default {
 
 <style scoped lang="less">
 @import "~@/styles/var.less";
-.aside {
+.blog-detail-container {
+  min-width: 650px;
+  text-align: justify;
+  text-indent: 2em;
+}
+.Aside {
   font-size: 12px;
   color: @gray;
+  width: 100%;
   span,
   a {
     margin-right: 15px;
   }
 }
-.markdown-body {
-  margin: 2em 0;
-}
 .desc {
   margin: 15px 0;
   font-size: 20px;
   color: #000;
+  width: 100;
   max-width: 1000px;
   overflow: hidden;
 }

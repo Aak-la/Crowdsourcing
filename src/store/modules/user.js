@@ -1,4 +1,4 @@
-import { getUser, logout } from "@/api/user";
+import { UserLogin, logout } from "@/api/user";
 export default {
   namespaced: true,
   state: {
@@ -20,19 +20,18 @@ export default {
       localStorage.setItem("avatar", avatar);
     },
   },
-
   actions: {
     handleLogin({ commit }, inFor) {
       let { password, username } = inFor;
       return new Promise((resolve, reject) => {
-        getUser({
+        UserLogin({
           password,
           username,
         })
           .then((res) => {
             const data = res.data;
             commit("setToken", data.token);
-            commit("setUserName", username);
+            commit("setUserName", data.username);
             commit("setAvatar", data.avatar);
             resolve(res);
           })
@@ -58,24 +57,5 @@ export default {
           });
       });
     },
-    /* getUserInfo({ state, commit }) {
-      return new Promise((resolve, reject) => {
-        try {
-          getUserInfo(state.token)
-            .then((res) => {
-              const data = res.data;
-              commit("setUserName", data.name);
-              commit("setUserId", data.user_id);
-              commit("setAvatar", data.access);
-              resolve(data);
-            })
-            .catch((err) => {
-              reject(err);
-            });
-        } catch (error) {
-          reject(error);
-        }
-      });
-    }, */
   },
 };

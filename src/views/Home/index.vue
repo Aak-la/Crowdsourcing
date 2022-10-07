@@ -1,43 +1,121 @@
 <template>
-  <div
-    v-loading="loading"
-    class="home-container"
-    ref="container"
-    @wheel="handleWheel"
-  >
-    <ul
-      class="carousel-container"
-      :style="{
-        marginTop,
-      }"
-      @transitionend="handleTransitionEnd"
-    >
-      <li v-for="item in data" :key="item.id">
-        <CarouselItem :carousel="item" />
-      </li>
-    </ul>
-    <div v-show="index >= 1" @click="switchTo(index - 1)" class="icon icon-up">
-      <Icon type="arrowUp" />
-    </div>
-    <div
-      v-show="index < data.length - 1"
-      @click="switchTo(index + 1)"
-      class="icon icon-down"
-    >
-      <Icon type="arrowDown" />
-    </div>
-    <ul class="indicator">
-      <li
-        :class="{
-          active: i === index,
-        }"
-        v-for="(item, i) in data"
-        :key="item.id"
-        @click="switchTo(i)"
-      ></li>
-    </ul>
-  </div>
+  <Layout>
+    <template #left>
+      <div class="aside">
+        <SiteAside />
+      </div>
+    </template>
+    <template>
+      <div
+        v-loading="loading"
+        class="home-container"
+        ref="container"
+        @wheel="handleWheel"
+      >
+        <ul
+          class="carousel-container"
+          :style="{
+            marginTop,
+          }"
+          @transitionend="handleTransitionEnd"
+        >
+          <li v-for="item in data" :key="item.id">
+            <CarouselItem :carousel="item" />
+          </li>
+        </ul>
+        <div
+          v-show="index >= 1"
+          @click="switchTo(index - 1)"
+          class="icon icon-up"
+        >
+          <Icon type="arrowUp" />
+        </div>
+        <div
+          v-show="index < data.length - 1"
+          @click="switchTo(index + 1)"
+          class="icon icon-down"
+        >
+          <Icon type="arrowDown" />
+        </div>
+        <ul class="indicator">
+          <li
+            :class="{
+              active: i === index,
+            }"
+            v-for="(item, i) in data"
+            :key="item.id"
+            @click="switchTo(i)"
+          ></li>
+        </ul>
+      </div>
+    </template>
+  </Layout>
 </template>
+<script>
+import { mapState } from "vuex";
+import CarouselItem from "./Carouselitem";
+import Icon from "@/components/Icon";
+import Layout from "@/components/Layout";
+import SiteAside from "@/components/SiteAside";
+
+export default {
+  components: {
+    CarouselItem,
+    Icon,
+    Layout,
+    SiteAside,
+  },
+  data() {
+    return {
+      index: 0, // 当前显示的是第几张轮播图
+      containerHeight: 0, // 整个容器的高度
+      switching: false, // 是否正在切换中
+    };
+  },
+  created() {
+    this.$store.dispatch("banner/fetchBanner");
+  },
+  mounted() {
+    this.containerHeight = this.$refs.container.clientHeight;
+    window.addEventListener("resize", this.handleResize);
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
+  computed: {
+    marginTop() {
+      return -this.index * this.containerHeight + "px";
+    },
+    ...mapState("banner", ["loading", "data"]),
+  },
+  methods: {
+    // 切换轮播图
+    switchTo(i) {
+      this.index = i;
+    },
+    handleWheel(e) {
+      if (this.switching) {
+        return;
+      }
+      if (e.deltaY < -5 && this.index > 0) {
+        // 往上滚动
+        this.switching = true;
+        this.index--;
+      } else if (e.deltaY > 5 && this.index < this.data.length - 1) {
+        // 往下滚动
+        this.switching = true;
+        this.index++;
+      }
+    },
+    handleTransitionEnd() {
+      this.switching = false;
+    },
+    handleResize() {
+      this.containerHeight = this.$refs.container.clientHeight;
+    },
+  },
+};
+</script>
 
 <style lang="less" scoped>
 @import "~@/styles/mixin.less";
@@ -124,65 +202,3 @@
   }
 }
 </style>
-
-<script>
-import { mapState } from "vuex";
-import CarouselItem from "./Carouselitem";
-import Icon from "@/components/Icon";
-
-export default {
-  components: {
-    CarouselItem,
-    Icon,
-  },
-  data() {
-    return {
-      index: 0, // 当前显示的是第几张轮播图
-      containerHeight: 0, // 整个容器的高度
-      switching: false, // 是否正在切换中
-    };
-  },
-  created() {
-    this.$store.dispatch("banner/fetchBanner");
-  },
-  mounted() {
-    this.containerHeight = this.$refs.container.clientHeight;
-    window.addEventListener("resize", this.handleResize);
-  },
-  destroyed() {
-    window.removeEventListener("resize", this.handleResize);
-  },
-  computed: {
-    marginTop() {
-      return -this.index * this.containerHeight + "px";
-    },
-    ...mapState("banner", ["loading", "data"]),
-  },
-  methods: {
-    // 切换轮播图
-    switchTo(i) {
-      this.index = i;
-    },
-    handleWheel(e) {
-      if (this.switching) {
-        return;
-      }
-      if (e.deltaY < -5 && this.index > 0) {
-        // 往上滚动
-        this.switching = true;
-        this.index--;
-      } else if (e.deltaY > 5 && this.index < this.data.length - 1) {
-        // 往下滚动
-        this.switching = true;
-        this.index++;
-      }
-    },
-    handleTransitionEnd() {
-      this.switching = false;
-    },
-    handleResize() {
-      this.containerHeight = this.$refs.container.clientHeight;
-    },
-  },
-};
-</script>

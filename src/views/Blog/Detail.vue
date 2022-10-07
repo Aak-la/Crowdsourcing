@@ -1,9 +1,16 @@
 <template>
   <Layout>
-    <div ref="mainContainer" class="main-container" v-loading="isLoading">
-      <BlogDetail :blog="data" v-if="data" />
-      <BlogComment v-if="!isLoading" />
-    </div>
+    <template #left>
+      <div class="aside">
+        <SiteAside />
+      </div>
+    </template>
+    <template>
+      <div ref="mainContainer" class="main-container" v-loading="isLoading">
+        <BlogDetail :blog="data" v-if="data" />
+        <BlogComment v-if="!isLoading" />
+      </div>
+    </template>
     <template #right> </template>
   </Layout>
 </template>
@@ -16,11 +23,13 @@ import BlogDetail from "./components/BlogDetail";
 import BlogComment from "./components/BlogComment";
 import mainScroll from "@/mixins/mainScroll.js";
 import { titleController } from "@/utils";
+import SiteAside from "@/components/SiteAside";
 export default {
   components: {
     Layout,
     BlogDetail,
     BlogComment,
+    SiteAside,
   },
   mixins: [fetchData(null), mainScroll("mainContainer")],
   methods: {
@@ -48,6 +57,7 @@ export default {
   padding: 20px;
   position: relative;
   width: 100%;
+  margin: 0 auto;
   overflow-x: hidden;
   scroll-behavior: smooth;
 }

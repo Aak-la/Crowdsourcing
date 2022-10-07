@@ -6,11 +6,11 @@ function delay(duration) {
     }, duration);
   });
 }
- function getPageComponents(components) {
+function getPageComponents(components) {
   return async () => {
     start();
     if (process.env.NODE_ENV === "development") {
-      await delay(1000);
+      await delay(0);
     }
     const comp = await components();
     done();

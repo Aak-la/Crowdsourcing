@@ -1,7 +1,11 @@
 <template>
   <div class="blog-list-container" ref="mainContainer" v-loading="isLoading">
     <ul v-show="isShow">
-      <li v-for="item in data" :key="item.id" v-if="data">
+      <li
+        v-for="item in data"
+        :key="item.id"
+        v-if="data"
+      >
         <div class="main">
           <RouterLink
             :to="{
@@ -15,7 +19,7 @@
             <p></p>
             <p class="describe">{{ item.description }}</p>
           </RouterLink>
-          <div class="aside">
+          <div class="Aside">
             <span>日期：{{ intercept(item.create_time) }}</span>
             <span class="spacing"></span>
             <el-badge
@@ -36,16 +40,9 @@
               <el-button size="small">浏览</el-button>
             </el-badge>
             <span class="spacing"></span>
-            <RouterLink
-              :to="{
-                name: 'CategoryBlog',
-                params: {
-                  categoryId: item.category,
-                },
-              }"
-            >
+            <span>
               {{ item.category }}
-            </RouterLink>
+            </span>
           </div>
         </div>
         <div class="thumb" v-if="item.img">
@@ -57,21 +54,18 @@
 </template>
 
 <script>
-import Pager from "@/components/Pager";
 import fetchData from "@/mixins/fetchData.js";
 import { getBlogs } from "@/api/blog.js";
 import intercept from "@/utils/interceptTime";
 import mainScroll from "@/mixins/mainScroll.js";
 export default {
-  components: {
-    Pager,
-  },
   data() {
     return {
       isShow: true,
       data: null,
       isLoading: true,
       total: null,
+      Animation: false,
     };
   },
   async created() {
@@ -89,7 +83,6 @@ export default {
       const categoryId = +this.$route.params.categoryId || -1;
       const page = +this.$route.query.page || 1;
       const limit = +this.$route.query.limit || 10;
-
       return {
         categoryId,
         page,
@@ -125,6 +118,7 @@ export default {
         });
       }
     },
+
   },
   watch: {
     async $route() {
@@ -204,7 +198,7 @@ li {
       color: #999;
     }
   }
-  .aside {
+  .Aside {
     position: absolute;
     font-size: 12px;
     color: @gray;

@@ -1,7 +1,11 @@
 import axios from "axios";
-const ins = axios.create();
+const token = localStorage.getItem("token");
+const ins = axios.create({
+  headers: {
+    Authorization: "Bearer " + token,
+  },
+});
 ins.interceptors.response.use(function(res) {
-  res.headers.Authorization = "Bear " + window.sessionStorage.getItem("token");
   return res;
 });
 

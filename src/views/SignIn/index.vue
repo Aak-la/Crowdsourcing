@@ -69,7 +69,7 @@
       <h5 @click="handleRegister">去注册>>></h5>
     </div>
     <div class="tourist">
-      <h5 @click="handlelogout">游客登录</h5>
+      <h5 @click="handleLogout">游客登录</h5>
     </div>
   </div>
 </template>
@@ -94,7 +94,7 @@ export default {
     };
     return {
       loginForm: {
-        username: "小白",
+        username: "小刘",
         password: "123",
       },
       loginRules: {
@@ -140,7 +140,7 @@ export default {
               });
               window.sessionStorage.setItem("token", res.data.token);
               this.timer = setTimeout(() => {
-                this.$router.replace("/layout");
+                this.$router.replace("/");
               }, 1200);
               this.loading = false;
             })
@@ -153,8 +153,8 @@ export default {
         }
       });
     },
-    handlelogout() {
-      this.$router.replace("/layout");
+    handleLogout() {
+      this.$router.replace("/");
     },
     handleRegister() {
       this.$router.replace("/register");

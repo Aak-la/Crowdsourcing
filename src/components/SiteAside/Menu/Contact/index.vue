@@ -15,7 +15,7 @@ export default {
       })
         .then(() => {
           this.$store.dispatch("user/handleLogOut");
-          this.$router.replace("/");
+          this.$forceUpdate();
         })
         .catch(() => {});
     },
