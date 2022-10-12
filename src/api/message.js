@@ -9,6 +9,6 @@ export async function getMessages(id) {
 }
 
 export async function postComment(msgInfo) {
-  console.log(msgInfo);
+  /*   console.log(msgInfo); */
   return await request.post("/api/comment", msgInfo);
 }

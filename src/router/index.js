@@ -15,7 +15,7 @@ router.beforeEach(async (to, from, next) => {
   if (store.getters.token) {
     next();
   } else {
-    if (to.path === "/backgroundManagement") {
+    if (to.path === "/backgroundManagement" || to.path === "/EXCEL") {
       setTimeout(() => {
         next({ path: "/404" });
       }, 1500);

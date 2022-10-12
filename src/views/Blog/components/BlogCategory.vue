@@ -54,7 +54,7 @@ export default {
     this.$store.dispatch("classification/getClassification").then((res) => {
       this.data = res.data.data;
       this.isLoading = false;
-      console.log(this.data);
+      /*  console.log(this.data); */
     });
   },
 };

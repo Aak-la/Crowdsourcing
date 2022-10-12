@@ -14,7 +14,6 @@ store
       return groups;
     };
     let getGroups = getGroup(res);
-    console.log(getGroups);
     store.dispatch("classification/calculateTheTotalNumberOf", {
       getGroups,
     });

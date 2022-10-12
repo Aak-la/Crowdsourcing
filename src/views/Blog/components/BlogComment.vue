@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     listTotal() {
-      return this.data.length;
+      return this.data.length == undefined ? 0 : this.data.length;
     },
   },
   methods: {

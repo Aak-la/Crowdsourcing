@@ -19,7 +19,7 @@ export default {
       return new Promise((resole, reject) => {
         getBlogCategories()
           .then((resp) => {
-            console.log(resp.data.data);
+            /*  console.log(resp.data.data); */
             ctx.commit("setData", resp.data.data);
             resole(resp);
           })

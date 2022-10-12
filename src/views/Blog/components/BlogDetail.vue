@@ -1,5 +1,6 @@
 <template>
   <div class="blog-detail-container">
+    <el-page-header @back="goBack"> </el-page-header>
     <h1>{{ blog.title }}</h1>
     <div class="Aside">
       <span>日期: {{ intercept(blog.create_time) }}</span>
@@ -31,6 +32,9 @@ export default {
   },
   methods: {
     intercept,
+    goBack() {
+      this.$router.back();
+    },
   },
 };
 </script>
