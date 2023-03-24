@@ -1,12 +1,17 @@
-import axios from "axios";
-const token = localStorage.getItem("token");
+import axios from 'axios'
+const token = localStorage.getItem('token')
 const ins = axios.create({
-  headers: {
-    Authorization: "Bearer " + token,
-  },
-});
+    baseURL: 'http://localhost:8080/',
+    headers: {
+        Authorization: 'Bearer ' + token
+    }
+})
 ins.interceptors.response.use(function(res) {
-  return res;
-});
+    if (res.data.state == 400) {
+        alert(res.data.msg)
+        return null
+    }
+    return res.data
+})
 
-export default ins;
+export default ins

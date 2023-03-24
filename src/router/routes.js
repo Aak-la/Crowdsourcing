@@ -1,133 +1,100 @@
-import "nprogress/nprogress.css";
-import { configure } from "nprogress";
-import { getPageComponents } from "../utils/index";
-configure({ trickleSpeed: 20, showSpinner: false });
 export default [
-  {
-    name: "Home",
-    path: "/",
-    component: getPageComponents(() => import("@/views/Home")),
-    meta: {
-      title: "首页",
-      activeMenuName: "basinMgr",
+    {
+        name: 'home',
+        path: '/home',
+        component: () => import('@/views/home'),
+        meta: {
+            title: '添加商品',
+            activeMenuName: 'basinMgr',
+            isAuthenticated: true
+        }
     },
-  },
-  {
-    name: "EXCEL",
-    path: "/EXCEL",
-    component: getPageComponents(() => import("@/views/EXCEL")),
-    meta: {
-      title: "表格",
-      isAuthenticated: false,
-      activeMenuName: "basinMgr",
+    {
+        name: 'order',
+        path: '/order',
+        component: () => import('@/views/order'),
+        meta: {
+            title: '商品订单',
+            isAuthenticated: true,
+            activeMenuName: 'basinMgr'
+        }
     },
-  },
-  {
-    name: "Blog",
-    path: "/article",
-    component: getPageComponents(() => import("@/views/Blog")),
-    meta: {
-      title: "文章",
-      activeMenuName: "basinMgr",
+    {
+        name: 'createOrder',
+        path: '/createOrder',
+        component: () => import('@/views/order/createOrder'),
+        meta: {
+            title: '创建订单',
+            isAuthenticated: true,
+            activeMenuName: 'basinMgr'
+        }
     },
-  },
-  {
-    name: "CategoryBlog",
-    path: "/article/:categoryId",
-    component: getPageComponents(() => import("@/views/Blog")),
-    meta: {
-      title: "文章",
-      activeMenuName: "basinMgr",
+    {
+        name: 'classify',
+        path: '/classify',
+        component: () => import('@/views/classify'),
+        meta: {
+            title: '商品分类',
+            activeMenuName: 'basinMgr',
+            isAuthenticated: true
+        }
     },
-  },
-  {
-    name: "BlogDetail",
-    path: "/article/:id",
-    component: getPageComponents(() => import("@/views/Blog/Detail")),
-    meta: {
-      title: "文章详情",
-      activeMenuName: "basinMgr",
+    {
+        name: 'goods',
+        path: '/goods',
+        component: () => import('@/views/goods'),
+        meta: {
+            title: '商品条目',
+            activeMenuName: 'basinMgr',
+            isAuthenticated: true
+        }
     },
-  },
-  {
-    name: "Project",
-    path: "/project",
-    component: getPageComponents(() => import("@/views/Project")),
-    meta: {
-      title: "项目简介",
-      activeMenuName: "basinMgr",
+    {
+        name: 'takingGoods',
+        path: '/takingGoods',
+        component: () => import('@/views/takingGoods'),
+        meta: {
+            title: '进货管理',
+            activeMenuName: 'basinMgr',
+            isAuthenticated: true
+        }
     },
-  },
-  {
-    name: "Message",
-    path: "/message",
-    component: getPageComponents(() => import("@/views/Message")),
-    meta: {
-      title: "上传文件",
-      activeMenuName: "basinMgr",
+    ,
+    {
+        name: 'backgroundManagement',
+        path: '/backgroundManagement',
+        component: () => import('@/views/backgroundManagement'),
+        meta: {
+            title: '后台管理',
+            activeMenuName: 'basinMgr',
+            isAuthenticated: true
+        }
     },
-  },
-  {
-    name: "ArticleOverview",
-    path: "/overview",
-    component: getPageComponents(() => import("@/views/ArticleOverview")),
-    meta: {
-      title: "文章总览",
+    {
+        name: 'SignIn',
+        path: '/',
+        component: () => import('@/views/SignIn'),
+        meta: {
+            title: '登录',
+            activeMenuName: 'basinMgr'
+        }
     },
-  },
-  {
-    name: "EditText",
-    path: "/EditText",
-    component: getPageComponents(() => import("@/views/EditText")),
-    meta: {
-      title: "富文本编辑",
-      activeMenuName: "basinMgr",
+    {
+        name: 'Register',
+        path: '/register',
+        component: () => import('@/views/Register'),
+        meta: {
+            title: '注册',
+            activeMenuName: 'basinMgr'
+        }
     },
-  },
-
-  {
-    name: "backgroundManagement",
-    path: "/backgroundManagement",
-    component: getPageComponents(() => import("@/views/backgroundManagement")),
-    meta: {
-      title: "后台管理",
-      activeMenuName: "basinMgr",
-    },
-  },
-  {
-    name: "FailurePage",
-    path: "*",
-    component: getPageComponents(() => import("@/components/FailurePage")),
-    meta: {
-      title: "404",
-      activeMenuName: "basinMgr",
-    },
-  },
-  {
-    name: "SignIn",
-    path: "/SignIn",
-    component: getPageComponents(() => import("@/views/SignIn")),
-    meta: {
-      title: "登录",
-      activeMenuName: "basinMgr",
-    },
-  },
-  {
-    name: "Register",
-    path: "/register",
-    component: getPageComponents(() => import("@/views/Register")),
-    meta: {
-      title: "注册",
-      activeMenuName: "basinMgr",
-    },
-  },
-  {
-    name: "404",
-    path: "/404",
-    component: getPageComponents(() => import("@/views/404")),
-    meta: {
-      title: "404",
-      activeMenuName: "basinMgr",
-    },
-  },
-];
+    {
+        name: '404',
+        path: '/404',
+        component: () => import('@/views/404'),
+        meta: {
+            title: '404',
+            activeMenuName: 'basinMgr'
+        }
+    }
+]

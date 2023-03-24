@@ -14,3 +14,40 @@
   width: 100%;
   height: 100%;
 }
+.set-padding20{
+  padding:20px;
+  box-sizing: border-box;
+}
+.set-content{
+    width: 100%;
+    user-select: none;
+    height: 650px;
+    .set-padding20();
+    overflow: hidden;
+}
+.set-pagination{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: auto;
+  margin-top: 20px;
+
+}
+.set-numberInput{
+  ::v-deep input::-webkit-outer-spin-button,
+        ::v-deep input::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+        }
+        ::v-deep input[type='number'] {
+            line-height: 1;
+            -moz-appearance: textfield !important;
+        }
+}
+* {
+  touch-action: none;
+}
+.set-echartsContainer{
+  width: 100%;
+  height: 100%;
+
+}

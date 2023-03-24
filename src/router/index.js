@@ -1,28 +1,35 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import routes from "./routes";
-import { titleController } from "@/utils";
-import store from "../store/index";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import routes from './routes'
+import { titleController } from '@/utils'
+import store from '../store/index'
+import 'nprogress/nprogress.css'
+import { configure, done, start } from 'nprogress'
+configure({ trickleSpeed: 20, showSpinner: false })
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 const router = new VueRouter({
-  routes,
-  mode: "history",
-});
+    routes,
+    mode: 'history'
+})
+const originalPush = VueRouter.prototype.push
 
 router.beforeEach(async (to, from, next) => {
-  titleController.setRouteTitle(to.meta.title);
-  if (store.getters.token) {
-    next();
-  } else {
-    if (to.path === "/backgroundManagement" || to.path === "/EXCEL") {
-      setTimeout(() => {
-        next({ path: "/404" });
-      }, 1500);
+    start()
+    titleController.setRouteTitle(to.meta.title)
+    if (to.meta.isAuthenticated) {
+        if (store.getters.token !== null) {
+            next()
+        } else {
+            next('/')
+        }
     } else {
-      next();
+        next()
     }
-  }
-});
+})
 
-export default router;
+router.afterEach((to, from) => {
+    done()
+})
+
+export default router
