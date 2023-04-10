@@ -146,9 +146,11 @@ export default {
                                 duration: 2000
                             })
                             window.sessionStorage.setItem('token', res.token)
-                            this.timer = setTimeout(() => {
-                                this.$router.push('home')
-                            }, 1200)
+                            if (res.token) {
+                                this.timer = setTimeout(() => {
+                                    this.$router.push('home')
+                                }, 1200)
+                            }
                             this.loading = false
                         })
                         .catch(() => {

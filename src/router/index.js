@@ -12,8 +12,6 @@ const router = new VueRouter({
     routes,
     mode: 'history'
 })
-const originalPush = VueRouter.prototype.push
-
 router.beforeEach(async (to, from, next) => {
     start()
     titleController.setRouteTitle(to.meta.title)

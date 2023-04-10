@@ -2,7 +2,7 @@ import { UserLogin, logout } from '@/api/user'
 export default {
     namespaced: true,
     state: {
-        token: localStorage.getItem('token') || null,
+        token: localStorage.getItem('localStorageToken') || null,
         name: localStorage.getItem('name') || null,
         avatar: localStorage.getItem('avatar') || null,
         Permissions: localStorage.getItem('Permissions') || null
@@ -10,7 +10,7 @@ export default {
     mutations: {
         setToken: (state, token) => {
             state.token = token
-            localStorage.setItem('token', token)
+            localStorage.setItem('localStorageToken', token)
         },
         setUserName: (state, name) => {
             state.name = name
@@ -35,7 +35,6 @@ export default {
                 })
                     .then(res => {
                         const data = res
-                        console.log(data)
                         commit('setToken', data.token)
                         commit('setUserName', data.username)
                         commit('setAvatar', data.avatar)
@@ -54,7 +53,7 @@ export default {
                         commit('setToken', null)
                         commit('setUserName', null)
                         commit('setAvatar', null)
-                        localStorage.removeItem('token')
+                        localStorage.removeItem('localStorageToken')
                         localStorage.removeItem('name')
                         localStorage.removeItem('avatar')
                         resolve()

@@ -108,15 +108,15 @@ export default {
     data() {
         return {
             form: {
-                orderNumber: '99919999999',
-                name: '小白',
-                num: '90',
-                phone: '19845061286',
-                time: '2022-09-10',
-                sendStatus: '已配送',
-                addressDesc: '北京',
-                payState: '已付款',
-                owner: '小白'
+                orderNumber: '',
+                name: '',
+                num: '',
+                phone: '',
+                time: '',
+                sendStatus: '',
+                addressDesc: '',
+                payState: '',
+                owner: ''
             },
             str: '',
             city: regionData,
@@ -214,9 +214,16 @@ export default {
                 delete data.addressDesc
                 if (valid) {
                     this.$refs.elForm.resetFields()
-                    console.log(data);
                     let res = await addOrders(data)
-                    console.log(res)
+                    if (res.state == 200) {
+                        this.$message({
+                            message: '添加成功',
+                            type: 'success'
+                        })
+                        this.timer = setTimeout(() => {
+                            this.$router.push('order')
+                        }, 1200)
+                    }
                 } else {
                     this.$message({
                         message: '请填写完整信息',

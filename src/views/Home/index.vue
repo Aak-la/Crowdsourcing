@@ -362,6 +362,7 @@ export default {
             this.dialogVisible = true
         },
         afterSuccessUpload(file) {
+            console.log(file.src)
             this.form.fileSrc.push(file.src)
             this.form.mapList = this.form.fileSrc.map((item) => {
                 return 'http://localhost:8080/' + item

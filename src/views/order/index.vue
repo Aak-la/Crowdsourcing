@@ -58,10 +58,13 @@
                                 inline
                                 class="demo-table-expand itemHover"
                             >
-                                <div @click="openMap(props.row.address)">
+                                <div>
                                     <el-form-item label="配送地址">
                                         <i class="el-icon-map-location"></i>
-                                        <span>{{ props.row.address }}</span>
+                                        <span
+                                            @click="openMap(props.row.address)"
+                                            >{{ props.row.address }}</span
+                                        >
                                     </el-form-item>
                                 </div>
                             </el-form>
@@ -258,7 +261,7 @@
 import Layout from '@/components/Layout'
 import SiteAside from '@/components/SiteAside'
 import { getOrder, addOrders, deleteOrder } from '../../api/order'
-import { data } from './data'
+/* import { data } from './data' */
 export default {
     components: {
         Layout,
@@ -335,7 +338,6 @@ export default {
         async initData() {
             let { res } = await getOrder()
             this.list = res
-            console.log(res)
         },
         handleSelectionChange(val) {
             this.multipleSelection = val
@@ -386,7 +388,7 @@ export default {
         },
         distributionSuccess() {},
         outbound() {},
-        closeTheOrder(scope, type) {
+        async closeTheOrder(scope, type) {
             let ID = []
             if (
                 type != 'undefined' &&
@@ -395,7 +397,6 @@ export default {
                 this.$refs.orderTable.selection.map((v) => {
                     ID.push(v.id)
                 })
-                console.log(ID)
             }
             if (this.$refs.orderTable.selection.length == 0 && type == 'all') {
                 this.$message({
@@ -407,7 +408,26 @@ export default {
                 this.$refs.orderTable.selection.length == 0 &&
                 type == undefined
             ) {
-                console.log(scope.row.id)
+                this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                })
+                    .then(async () => {
+                        let res = await deleteOrder(scope.row.id)
+                        this.initData()
+                        console.log(res)
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        })
+                    })
+                    .catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                        })
+                    })
             }
             /* if (type != 'undefined' && this.$refs.orderTable.selection != 0) {
                 this.$refs.orderTable.selection.map(v=>{ID.push(Object.assign({},{id:v.id}))})

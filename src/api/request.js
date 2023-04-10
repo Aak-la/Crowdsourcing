@@ -1,12 +1,19 @@
 import axios from 'axios'
-const token = localStorage.getItem('token')
-const ins = axios.create({
+const request = axios.create({
     baseURL: 'http://localhost:8080/',
-    headers: {
-        Authorization: 'Bearer ' + token
-    }
 })
-ins.interceptors.response.use(function(res) {
+request.interceptors.request.use((config) => {
+    const token = window.sessionStorage.getItem('token')
+    if (token) {
+        config.headers.Authorization = 'Bear ' + token;
+    } else {
+        const newToken = localStorage.getItem('localStorageToken')
+        config.headers.Authorization = 'Bear ' + newToken;
+    }
+    return config;
+});
+
+request.interceptors.response.use(function (res) {
     if (res.data.state == 400) {
         alert(res.data.msg)
         return null
@@ -14,4 +21,4 @@ ins.interceptors.response.use(function(res) {
     return res.data
 })
 
-export default ins
+export default request
