@@ -27,9 +27,7 @@
                         >
                         </el-option>
                     </el-select>
-                    <el-button
-                        type="primary"
-                        @click="closeTheOrder($event, 'all')"
+                    <el-button type="primary" @click="closeTheOrder($event)"
                         ><i class="el-icon-delete"></i
                         >&nbsp;删除选中的订单</el-button
                     >
@@ -230,12 +228,6 @@
                         class="map"
                         :scroll-wheel-zoom="true"
                     >
-                        <bm-geolocation
-                            anchor="BMAP_ANCHOR_BOTTOM_RIGHT"
-                            :showAddressBar="true"
-                            :autoLocation="true"
-                            @locationSuccess="locationSuccess"
-                        ></bm-geolocation>
                         <bm-marker
                             v-if="bmMarker"
                             :position="startLocations"
@@ -260,8 +252,8 @@
 <script>
 import Layout from '@/components/Layout'
 import SiteAside from '@/components/SiteAside'
-import { getOrder, addOrders, deleteOrder } from '../../api/order'
-/* import { data } from './data' */
+import { getOrder, deleteOrder } from '../../api/order'
+
 export default {
     components: {
         Layout,
@@ -269,6 +261,7 @@ export default {
     },
     data() {
         return {
+            data: [],
             isShow: false,
             bmMarker: false,
             loading: false,
@@ -338,6 +331,7 @@ export default {
         async initData() {
             let { res } = await getOrder()
             this.list = res
+            this.data = res
         },
         handleSelectionChange(val) {
             this.multipleSelection = val
@@ -386,35 +380,31 @@ export default {
         formatJson(filterVal, jsonData) {
             return jsonData.map((v) => filterVal.map((j) => v[j]))
         },
-        distributionSuccess() {},
-        outbound() {},
         async closeTheOrder(scope, type) {
             let ID = []
-            if (
-                type != 'undefined' &&
-                this.$refs.orderTable.selection.length != 0
-            ) {
+            /*  if (this.$refs.orderTable.selection.length != 0) {
                 this.$refs.orderTable.selection.map((v) => {
                     ID.push(v.id)
                 })
-            }
-            if (this.$refs.orderTable.selection.length == 0 && type == 'all') {
+                console.log(ID)
+            } */
+            if (this.$refs.orderTable.selection.length == 0) {
                 this.$message({
                     message: '请至少选择中一条订单',
                     type: 'warning'
                 })
             }
-            if (
-                this.$refs.orderTable.selection.length == 0 &&
-                type == undefined
-            ) {
+            if (this.$refs.orderTable.selection.length != 0) {
+                this.$refs.orderTable.selection.map((v) => {
+                    ID.push(v.id)
+                })
                 this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 })
                     .then(async () => {
-                        let res = await deleteOrder(scope.row.id)
+                        let res = await deleteOrder(JSON.stringify(ID))
                         this.initData()
                         console.log(res)
                         this.$message({
@@ -429,38 +419,6 @@ export default {
                         })
                     })
             }
-            /* if (type != 'undefined' && this.$refs.orderTable.selection != 0) {
-                this.$refs.orderTable.selection.map(v=>{ID.push(Object.assign({},{id:v.id}))})
-                console.log(ID);
-            } */
-            /* if (scope != 'All') {
-                let { id } = scope.row
-                console.log(id)
-            } else {
-                if (this.$refs.orderTable.selection.length < this.list.length) {
-                    this.checkAll = true
-                } else {
-                    this.checkAll = false
-                }
-                this.$refs.orderTable.toggleAllSelection()
-                this.$confirm('此操作将永久删除全部订单, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                })
-                    .then(() => {
-                        this.$message({
-                            type: 'success',
-                            message: '删除成功!'
-                        })
-                    })
-                    .catch(() => {
-                        this.$message({
-                            type: 'info',
-                            message: '已取消删除'
-                        })
-                    })
-            } */
         },
         toViewTheOrder(scope) {
             Array.prototype.remove = function (val) {
@@ -522,25 +480,25 @@ export default {
             }
             switch (value) {
                 case '未付款':
-                    this.list = data
+                    this.list = this.data
                     this.list = getData('未付款', 'payState')
                     break
                 case '已付款':
-                    this.list = data
+                    this.list = this.data
                     this.list = getData('已付款', 'payState')
 
                     break
                 case '已配送':
-                    this.list = data
+                    this.list = this.data
                     this.list = getData('已配送', 'sendStatus')
                     break
                 case '未配送':
-                    this.list = data
+                    this.list = this.data
                     this.list = getData('未配送', 'sendStatus')
                     break
 
                 default:
-                    this.list = data
+                    this.list = this.data
                     break
             }
         },
@@ -550,7 +508,7 @@ export default {
                     return item['orderNumber'] == value
                 })
             } else {
-                this.list = data
+                this.list = this.data
             }
         },
         resetLoadingState() {

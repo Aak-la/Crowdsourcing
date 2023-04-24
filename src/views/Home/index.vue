@@ -71,6 +71,18 @@
                             <el-input v-model="form.goodsLabel"></el-input>
                         </el-form-item>
                         <el-form-item label="商品图片">
+                            <!--    <el-upload
+                                ref="upload"
+                                action="http://localhost:8080/api/upload"
+                                list-type="picture-card"
+                                multiple
+                                :limit="3"
+                                :on-preview="preview"
+                                :on-success="afterSuccessUpload"
+                                :on-exceed="maxFile"
+                            >
+                                <i class="el-icon-plus"></i>
+                            </el-upload> -->
                             <el-upload
                                 ref="upload"
                                 action="http://localhost:8080/api/upload"
@@ -78,6 +90,7 @@
                                 multiple
                                 :limit="3"
                                 :on-preview="preview"
+                                :on-remove="handleRemove"
                                 :on-success="afterSuccessUpload"
                                 :on-exceed="maxFile"
                             >
@@ -192,9 +205,11 @@ import Layout from '@/components/Layout'
 import SiteAside from '@/components/SiteAside'
 import { addGood } from '@/api/good'
 import { getClassify } from '@/api/classify.js'
+import { imgEdit } from '@/api/img'
 export default {
     data() {
         return {
+            fileList: [],
             form: {
                 goodsClassValue: '',
                 name: '',
@@ -367,6 +382,10 @@ export default {
             this.form.mapList = this.form.fileSrc.map((item) => {
                 return 'http://localhost:8080/' + item
             })
+        },
+        async handleRemove({ response }) {
+            /* let res = await imgEdit(response.src)
+            console.log(response.src) */
         },
         maxFile() {
             this.$message({

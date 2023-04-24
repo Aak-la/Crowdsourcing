@@ -1,6 +1,8 @@
 <template>
     <div class="app-container">
-        <router-view :key="key"></router-view>
+        <keep-alive :include="['takingGoods']"
+            ><router-view></router-view
+        ></keep-alive>
     </div>
 </template>
 
@@ -10,11 +12,11 @@
 }
 </style>
 <script>
-export default {
+/* export default {
     computed: {
         key() {
             return this.$route.meta.routerViewKey || this.$route.path
         }
     }
-}
+} */
 </script>
