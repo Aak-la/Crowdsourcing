@@ -5,8 +5,6 @@
             v-for="item in items"
             :key="item.link"
             :to="{ name: item.name }"
-            active-class="selected"
-            exact-active-class=""
         >
             <div class="icon">
                 <svg-icon :icon-class="item.icon" />
@@ -47,7 +45,13 @@ export default {
                 },
                 {
                     name: 'takingGoods',
-                    title: '进货阅览',
+                    title: '商品阅览',
+                    icon: 'jinhuo',
+                    exact: true
+                },
+                {
+                    name: 'drag',
+                    title: '员工管理',
                     icon: 'jinhuo',
                     exact: true
                 }

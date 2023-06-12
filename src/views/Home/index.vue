@@ -216,7 +216,7 @@ export default {
                 activeDate: '',
                 delivery: false,
                 price: '',
-                sellPrice: ' ',
+                sellPrice: '',
                 num: ' ',
                 type: [],
                 resource: '',

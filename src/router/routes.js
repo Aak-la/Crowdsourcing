@@ -5,7 +5,7 @@ export default [
         component: () => import('@/views/home'),
         meta: {
             title: '添加商品',
-            activeMenuName: 'basinMgr',
+
             isAuthenticated: true
         }
     },
@@ -35,7 +35,7 @@ export default [
         component: () => import('@/views/classify'),
         meta: {
             title: '商品分类',
-            activeMenuName: 'basinMgr',
+
             isAuthenticated: true
         }
     },
@@ -45,7 +45,7 @@ export default [
         component: () => import('@/views/goods'),
         meta: {
             title: '商品条目',
-            activeMenuName: 'basinMgr',
+
             isAuthenticated: true
         }
     },
@@ -55,7 +55,7 @@ export default [
         component: () => import('@/views/takingGoods'),
         meta: {
             title: '进货管理',
-            activeMenuName: 'basinMgr',
+
             isAuthenticated: true
         }
     },
@@ -66,7 +66,7 @@ export default [
         component: () => import('@/views/backgroundManagement'),
         meta: {
             title: '后台管理',
-            activeMenuName: 'basinMgr',
+
             isAuthenticated: true
         }
     },
@@ -90,10 +90,19 @@ export default [
     },
     {
         name: '404',
-        path: '/404',
+        path: '*',
         component: () => import('@/views/404'),
         meta: {
             title: '404',
+            activeMenuName: 'basinMgr'
+        }
+    },
+    {
+        name: 'drag',
+        path: '/drag',
+        component: () => import('@/views/drag'),
+        meta: {
+            title: 'drag',
             activeMenuName: 'basinMgr'
         }
     }

@@ -19,11 +19,13 @@
         </template>
     </Layout>
 </template>
+
 <script>
 import echartBlueprint from '../../components/echartBlueprint'
 import Layout from '@/components/Layout'
 import SiteAside from '@/components/SiteAside'
 export default {
+    name: 'takingGoods',
     components: { Layout, SiteAside, echartBlueprint },
     data() {
         return {

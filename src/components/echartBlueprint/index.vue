@@ -10,7 +10,7 @@ export default {
         options: {
             type: Object,
             default: () => {},
-            require
+            required: true
         },
         name: {
             type: String,
@@ -30,8 +30,4 @@ export default {
     }
 }
 </script>
-<style lang="less" scoped>
-.echartContainer {
-    .set-echartsContainer();
-}
-</style>
+

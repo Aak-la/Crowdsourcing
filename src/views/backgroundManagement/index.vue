@@ -133,10 +133,12 @@ import {
 } from '@/api/user'
 import SiteAside from '@/components/SiteAside'
 import Layout from '@/components/Layout'
+import theWatermark from '@/components/theWatermark'
 export default {
     components: {
         Layout,
-        SiteAside
+        SiteAside,
+        theWatermark
     },
     data() {
         return {
@@ -156,7 +158,6 @@ export default {
     },
     async created() {
         const { data } = await getAllUserData()
-        console.log(data);
         this.tableData = [...data]
     },
 
@@ -203,14 +204,6 @@ export default {
                 })
         }
     }
-    /* computed: {
-        SetImgUrl(data) {
-            this.$nextTick(function () {
-                console.log(data)
-                return data
-            })
-        }
-    } */
 }
 </script>
 <style scoped lang="less">
