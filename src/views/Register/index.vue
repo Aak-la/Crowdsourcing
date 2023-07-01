@@ -129,10 +129,10 @@ export default {
         }
         return {
             loginForm: {
-                username: '王维',
-                password: '123456',
-                phone: '19845061230',
-                email: '486910174@qq.com'
+                username: '',
+                password: '',
+                phone: '',
+                email: ''
             },
             loginRules: {
                 username: [

@@ -1,25 +1,29 @@
 <template>
-  <Layout>
-    <template #left>
-      <div class="aside">
-        <SiteAside />
-      </div>
-    </template>
-    <template>
-      <el-empty description="登录后再进入"></el-empty>
-    </template>
-  </Layout>
+    <div class="container">
+        <el-empty description="404"></el-empty>
+        <div class="goBack-btn">
+            <el-button type="primary" @click="goBack">返回首页</el-button>
+        </div>
+    </div>
 </template>
 
 <script>
-import Layout from "@/components/Layout";
-import SiteAside from "@/components/SiteAside";
 export default {
-  components: {
-    Layout,
-    SiteAside,
-  },
-};
+    methods: {
+        goBack() {
+            this.$router.replace('/')
+        }
+    }
+}
 </script>
 
-<style></style>
+
+<style lang="less" scoped>
+.container {
+    .goBack-btn {
+        width: 100px;
+        /*   background-color: aqua; */
+        margin: 0 auto;
+    }
+}
+</style>

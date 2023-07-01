@@ -80,7 +80,6 @@
                             </el-image>
                         </template>
                     </el-table-column>
-
                     <el-table-column
                         prop="num"
                         label="商品库存"
@@ -185,14 +184,12 @@ export default {
     methods: {
         async initTableData() {
             let { res } = await getGood()
-
             let newRes = []
             res.forEach((item) => {
                 let data = JSON.parse(item.data)
-                newRes.push({ ...data, id: item.id, imageBox: data.mapList[0] })
+                newRes.push({ ...data, id: item.id })
             })
             this.tableData = newRes
-            console.log(newRes)
             this.loading = false
         },
         handleSizeChange(size) {

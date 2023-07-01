@@ -21,7 +21,7 @@
                                 style="width: 420px"
                             >
                                 <el-option
-                                    v-for="item in form.goodsClass"
+                                    v-for="item in goodsClass"
                                     :key="item.value"
                                     :label="item.label"
                                     :value="item.value"
@@ -70,31 +70,28 @@
                         >
                             <el-input v-model="form.goodsLabel"></el-input>
                         </el-form-item>
-                        <el-form-item label="商品图片">
-                            <!--    <el-upload
-                                ref="upload"
-                                action="http://localhost:8080/api/upload"
-                                list-type="picture-card"
-                                multiple
-                                :limit="3"
-                                :on-preview="preview"
-                                :on-success="afterSuccessUpload"
-                                :on-exceed="maxFile"
-                            >
-                                <i class="el-icon-plus"></i>
-                            </el-upload> -->
+                        <el-form-item label="商品图片" prop="fileLists">
                             <el-upload
+                                class="upload-demo"
+                                :action="actionURL"
+                                :manual="true"
+                                :auto-upload="false"
                                 ref="upload"
-                                action="http://localhost:8080/api/upload"
-                                list-type="picture-card"
-                                multiple
-                                :limit="3"
-                                :on-preview="preview"
-                                :on-remove="handleRemove"
-                                :on-success="afterSuccessUpload"
-                                :on-exceed="maxFile"
+                                :http-request="uploadFile"
+                                :before-upload="beforeUpload"
+                                :file-list="fileList"
+                                list-type="picture"
+                                :on-change="fileChange"
+                                :on-remove="fileRemove"
+                                :on-success="handleSuccess"
+                                :on-error="handleError"
                             >
-                                <i class="el-icon-plus"></i>
+                                <el-button
+                                    slot="trigger"
+                                    size="small"
+                                    type="primary"
+                                    >选取图片</el-button
+                                >&nbsp;
                             </el-upload>
                             <el-dialog :visible.sync="dialogVisible">
                                 <img
@@ -138,7 +135,7 @@
                                     placeholder="请选择"
                                 >
                                     <el-option-group
-                                        v-for="group in form.activeArea"
+                                        v-for="group in activeArea"
                                         :key="group.label"
                                         :label="group.label"
                                     >
@@ -204,12 +201,18 @@ import { mapGetters } from 'vuex'
 import Layout from '@/components/Layout'
 import SiteAside from '@/components/SiteAside'
 import { addGood } from '@/api/good'
+import { Area, Rules } from './dataSource'
 import { getClassify } from '@/api/classify.js'
-import { imgEdit } from '@/api/img'
+import { imgUpload } from '@/api/upload.js'
 export default {
     data() {
         return {
+            actionURL: 'http://localhost:8080/api/upload',
+            response: null,
+            uploadFiles: [],
             fileList: [],
+            activeArea: Area,
+            goodsClass: [],
             form: {
                 goodsClassValue: '',
                 name: '',
@@ -217,93 +220,18 @@ export default {
                 delivery: false,
                 price: '',
                 sellPrice: '',
-                num: ' ',
+                num: '',
                 type: [],
-                resource: '',
+                resource: '正常商品',
                 desc: '',
                 goodsLabel: '',
-                fileSrc: [],
-                mapList: [],
-                uploadHide: false,
-                goodsClass: [],
-                activeArea: [
-                    {
-                        label: '热门地域',
-                        activeArea: [
-                            {
-                                value: '港南区江南大道',
-                                label: '港南区江南大道'
-                            },
-                            {
-                                value: '港北区万达',
-                                label: '港北区万达'
-                            }
-                        ]
-                    },
-                    {
-                        label: '地域名',
-                        activeArea: [
-                            {
-                                value: '港北区金港大道',
-                                label: '港北区金港大道'
-                            },
-                            {
-                                value: '港北区吾星悦广场',
-                                label: '港北区吾星悦广场'
-                            },
-                            {
-                                value: '港南区江南校区',
-                                label: '港南区江南校区'
-                            },
-                            {
-                                value: '港南区青云大桥',
-                                label: '港南区青云大桥'
-                            }
-                        ]
-                    }
-                ],
-                activeAreaValue: ''
+                activeAreaValue: '',
+                fileLists: null
             },
             dialogImageUrl: '',
             dialogVisible: false,
             disabled: false,
-            formRules: {
-                goodsClassValue: [
-                    {
-                        required: true,
-                        trigger: 'blur',
-                        message: '该项为必填项'
-                    }
-                ],
-                name: [
-                    {
-                        required: true,
-                        trigger: 'blur',
-                        message: '该项为必填项'
-                    }
-                ],
-                goodsLabel: [
-                    {
-                        required: true,
-                        trigger: 'blur',
-                        message: '该项为必填项'
-                    }
-                ],
-                price: [
-                    {
-                        required: true,
-                        trigger: 'blur',
-                        message: '该项为必填项'
-                    }
-                ],
-                sellPrice: [
-                    {
-                        required: true,
-                        trigger: 'blur',
-                        message: '该项为必填项'
-                    }
-                ]
-            }
+            formRules: Rules
         }
     },
     name: 'App',
@@ -315,59 +243,42 @@ export default {
         this.$store.dispatch('classify/GetClassify')
         this.initGoodsClass()
     },
-    computed: { ...mapGetters(['classify']) },
+    computed: { ...mapGetters(['classify', 'token']) },
     methods: {
         async initGoodsClass() {
             let { res } = await getClassify()
-            this.form.goodsClass = res
+            this.goodsClass = res
         },
         async onSubmit() {
+            this.$refs.upload.submit()
             this.delivery = true
             this.$refs.form.validate(async (valid) => {
                 if (valid) {
-                    let {
-                        goodsClassValue,
-                        activeAreaValue,
-                        desc,
-                        goodsLabel,
-                        resource,
-                        sellPrice,
-                        price,
-                        num,
-                        name,
-                        activeDate,
-                        mapList,
-                        type
-                    } = this.form
-                    let data = JSON.stringify({
-                        status: '已上架',
-                        goodsClassValue,
-                        activeAreaValue,
-                        desc,
-                        goodsLabel,
-                        resource,
-                        sellPrice,
-                        num,
-                        name,
-                        price,
-                        activeDate,
-                        type,
-                        mapList
-                    })
-                    let res = await addGood(data)
-                    if (res.state == 200) {
-                        this.$refs.form.resetFields()
-                        this.$refs['upload'].clearFiles()
-                        this.$message({
-                            message: '添加成功',
-                            type: 'success'
+                    try {
+                        const result = await this.uploadPromise
+                        delete this.form.fileLists && delete this.form.delivery
+                        let data = JSON.stringify({
+                            status: '已上架',
+                            ...this.form,
+                            imageBox: JSON.parse(result.data)[0]
                         })
-                    } else {
-                        this.$refs.form.resetFields()
-                        this.$message({
-                            message: '添加失败',
-                            type: 'warning'
-                        })
+                        let res = await addGood(data)
+                        if (res.state == 200) {
+                            this.$refs.form.resetFields()
+                            this.$refs['upload'].clearFiles()
+                            this.$message({
+                                message: '添加成功',
+                                type: 'success'
+                            })
+                        } else {
+                            this.$refs.form.resetFields()
+                            this.$message({
+                                message: '添加失败',
+                                type: 'warning'
+                            })
+                        }
+                    } catch (error) {
+                        console.log(error)
                     }
                 }
             })
@@ -376,22 +287,62 @@ export default {
             this.dialogImageUrl = file.url
             this.dialogVisible = true
         },
-        afterSuccessUpload(file) {
-            console.log(file.src)
-            this.form.fileSrc.push(file.src)
-            this.form.mapList = this.form.fileSrc.map((item) => {
-                return 'http://localhost:8080/' + item
-            })
+        async uploadFile(options) {
+            const file = options.file
+            const formData = new FormData()
+            formData.append('file', file)
+
+            try {
+                const res = await imgUpload(formData)
+                options.onSuccess(res)
+            } catch (error) {
+                param.onError(error)
+            }
         },
-        async handleRemove({ response }) {
-            /* let res = await imgEdit(response.src)
-            console.log(response.src) */
-        },
-        maxFile() {
-            this.$message({
-                message: '最多上传三张图片',
-                type: 'warning'
+        beforeUpload(file) {
+            const isJPG = file.type === 'image/jpeg'
+            const isPNG = file.type === 'image/png'
+            const isBMP = file.type === 'image/bmp'
+            const isGIF = file.type === 'image/gif'
+            const isIMG = isJPG || isPNG || isBMP || isGIF
+            if (!isIMG) {
+                this.$message.error('上传文件只能为图片格式！')
+                return false
+            }
+            const currentCount = this.$refs.upload.uploadFiles.length
+            const isLt2M = file.size / 1024 / 1024 < 2
+            if (!isLt2M) {
+                this.$message.error('上传文件大小不能超过 2MB！')
+                return false
+            }
+            this.uploadPromise = new Promise((resolve, reject) => {
+                this.resolve = resolve
+                this.reject = reject
             })
+            return true
+        },
+        handleSuccess(response, file, fileList) {
+            this.resolve(response)
+            this.$refs.upload.clearFiles()
+        },
+        handleError(error, file, fileList) {
+            this.reject(error)
+        },
+        submitUpload() {
+            this.$refs.upload.submit()
+        },
+        fileChange(uploadFile, fileList) {
+            this.form.fileLists = uploadFile
+
+            if (fileList.length !== 0) {
+                this.$refs.form.validateField('fileLists')
+            }
+        },
+        fileRemove(uploadFile, fileList) {
+            if (fileList.length === 0) {
+                this.form.file = null
+                this.$refs.form.validateField('fileLists')
+            }
         }
     }
 }

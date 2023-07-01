@@ -25,9 +25,13 @@ router.beforeEach(async (to, from, next) => {
         next()
     }
 })
-
-router.afterEach((to, from) => {
+router.afterEach(() => {
+    // 处理 404 页面
     done()
+    if (!router.currentRoute.matched.length) {
+        router.replace('/404')
+    }
 })
+
 
 export default router

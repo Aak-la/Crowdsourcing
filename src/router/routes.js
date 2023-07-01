@@ -90,7 +90,7 @@ export default [
     },
     {
         name: '404',
-        path: '*',
+        path: '/404',
         component: () => import('@/views/404'),
         meta: {
             title: '404',
